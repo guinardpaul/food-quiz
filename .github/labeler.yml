@@ -1,0 +1,39 @@
+backend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/**"
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/test/**"
+
+configuration:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/resources/**"
+          - "application*.yml"
+          - "application*.properties"
+
+database:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/resources/db/**"
+          - "src/main/resources/migration/**"
+
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "pom.xml"
+          - ".mvn/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/workflows/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**"  
