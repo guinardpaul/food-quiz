@@ -1,7 +1,19 @@
-backend:
+root:
   - changed-files:
-      - any-glob-to-any-file:
-          - "src/main/java/**"
+      - any-glob-to-any-file: '*'
+  
+source:
+  - changed-files:
+      - any-glob-to-any-file: "src/main/java/**"
+      - all-globs-to-all-files: '!src/docs/*'
+
+# Add 'feature' label to any PR where the head branch name starts with `feature` or has a `feature` section in the name
+feature:
+ - head-branch: ['^feature', 'feature']
+
+# Add 'release' label to any PR that is opened against the `main` branch
+release:
+ - base-branch: 'main'
 
 tests:
   - changed-files:
@@ -23,9 +35,8 @@ database:
 
 build:
   - changed-files:
-      - any-glob-to-any-file:
+      - any-glob-to-any-file: 
           - "pom.xml"
-          - ".mvn/**"
 
 ci:
   - changed-files:
