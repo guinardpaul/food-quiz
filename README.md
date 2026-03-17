@@ -13,8 +13,33 @@ food weight and glucid quantity estimations.
 
 - Spring Boot
 - REST
-- PosrgreSQL
+- PostgreSQL
 - Liquibase
+
+## Architecture
+
+This project uses a multi-module architecture composed of :
+- api
+- application
+- domain
+- infrastructure
+
+Development coherence is assured by the architecture-tests module using ArchUnit.
+
+JaCoCo aggregate tests report is realized within tests-report module.
+
+## Installation
+
+### Pre requisites
+
+- JDK 25
+- Apache Maven > 3.8
+
+### Build project
+
+Run the following command:
+
+`mvn clean install`
 
 ## Deployment
 
