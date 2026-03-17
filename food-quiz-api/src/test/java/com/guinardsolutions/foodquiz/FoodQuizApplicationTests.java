@@ -8,6 +8,7 @@ class FoodQuizApplicationTests {
 
 	@Test
 	void contextLoads() {
+		FoodQuizApplication.main(new String[] {});
 	}
 
 }

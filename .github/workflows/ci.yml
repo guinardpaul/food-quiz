@@ -44,6 +44,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 80
           min-coverage-changed-files: 80
+          title: Jacoco Report
           update-comment: true
 
       - name: Fail PR if overall coverage is less than 80%
