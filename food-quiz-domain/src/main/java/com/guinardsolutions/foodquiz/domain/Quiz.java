@@ -19,10 +19,21 @@ public class Quiz {
         if (index >= questions.size()) {
             throw new IllegalStateException("There is no question left");
         }
+        if (index > 0) {
+            Question previousQuestion = questions.get(index - 1);
+            if (!previousQuestion.isAnswered()) {
+                throw new IllegalStateException("Cannot get next question because current has not been answered");
+            }
+        }
+
         return questions.get(index);
     }
 
     public boolean answer(String answer) {
         return questions.get(index).answer(answer);
+    }
+
+    public boolean hasQuestionLeft() {
+        return (index + 1) < questions.size();
     }
 }
