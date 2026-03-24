@@ -4,14 +4,16 @@ import java.util.List;
 
 public class Quiz {
 
-    List<Question> questions;
-    int index = -1;
+    private final List<Question> questions;
+    private final QuizReview quizReview;
+    private int index = -1;
 
     public Quiz(List<Question> questions) {
         if (questions.isEmpty()) {
             throw new IllegalArgumentException("A Quiz must have at least one question");
         }
         this.questions = questions;
+        this.quizReview = new QuizReview(questions.size());
     }
 
     public Question currentQuestion() {
@@ -30,10 +32,26 @@ public class Quiz {
     }
 
     public boolean answer(String answer) {
-        return questions.get(index).answer(answer);
+        Question question = questions.get(index);
+        boolean result = question.answer(answer);
+        quizReview.addUserAnswer(question, answer);
+
+        return result;
     }
 
     public boolean hasQuestionLeft() {
         return (index + 1) < questions.size();
+    }
+
+    public double getScore() {
+        if (hasQuestionLeft() || !questions.get(index).isAnswered()) {
+            throw new IllegalStateException("All quiz questions must be answered before getting the score");
+        }
+
+        return this.quizReview.computeScore();
+    }
+
+    public QuizReview getQuizReview() {
+        return quizReview;
     }
 }

@@ -81,13 +81,13 @@ class QuizTests {
 
         boolean res = quiz.hasQuestionLeft();
         assertThat(res).isTrue();
-        Question q1 = quiz.currentQuestion();
-        q1.answer("B");
+        quiz.currentQuestion();
+        quiz.answer("B");
 
         res = quiz.hasQuestionLeft();
         assertThat(res).isTrue();
-        Question q2 = quiz.currentQuestion();
-        q2.answer("B");
+        quiz.currentQuestion();
+        quiz.answer("B");
 
         res = quiz.hasQuestionLeft();
         assertThat(res).isFalse();
@@ -113,5 +113,72 @@ class QuizTests {
                 .hasSize(2)
                 .contains("A")
                 .contains("B");
+    }
+
+    @Test
+    void cannot_get_score_if_quiz_is_not_finished_question_not_answered() {
+        Quiz quiz = new Quiz(List.of(new Question("Q1", List.of("A", "B"), "A")));
+        quiz.currentQuestion();
+
+        assertThatThrownBy(quiz::getScore)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("All quiz questions must be answered before getting the score");
+    }
+
+    @Test
+    void cannot_get_score_if_quiz_is_not_finished_question_left() {
+        Quiz quiz = new Quiz(List.of(
+                new Question("Q1", List.of("A", "B"), "A"),
+                new Question("Q2", List.of("A", "B"), "A")
+        ));
+        quiz.currentQuestion();
+        quiz.answer("A");
+
+        assertThatThrownBy(quiz::getScore)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("All quiz questions must be answered before getting the score");
+    }
+
+    @Test
+    void should_get_score_when_quiz_end() {
+        Quiz quiz = new Quiz(List.of(
+                new Question("Q1", List.of("A", "B"), "A"),
+                new Question("Q2", List.of("A", "B"), "B"),
+                new Question("Q3", List.of("A", "B"), "A")
+        ));
+
+        quiz.currentQuestion();
+        quiz.answer("B");
+        quiz.currentQuestion();
+        quiz.answer("B");
+        quiz.currentQuestion();
+        quiz.answer("B");
+        Boolean res = quiz.hasQuestionLeft();
+        assertThat(res).isFalse();
+
+        double score = quiz.getScore();
+        assertThat(score).isEqualTo(33.0);
+    }
+
+    @Test
+    void should_get_quiz_review_at_the_end() {
+        Quiz quiz = new Quiz(List.of(
+                new Question("Q1", List.of("A", "B"), "A"),
+                new Question("Q2", List.of("A", "B"), "B"),
+                new Question("Q3", List.of("A", "B"), "A")
+        ));
+        quiz.currentQuestion();
+        quiz.answer("A");
+        quiz.currentQuestion();
+        quiz.answer("B");
+        quiz.currentQuestion();
+        quiz.answer("B");
+        Boolean res = quiz.hasQuestionLeft();
+        assertThat(res).isFalse();
+
+        QuizReview review = quiz.getQuizReview();
+        assertThat(review.getQuestionReview()).hasSize(3);
+        List<QuestionReview> correctAnswers = review.getQuestionReview().stream().filter(QuestionReview::isCorrect).toList();
+        assertThat(correctAnswers).hasSize(2);
     }
 }
