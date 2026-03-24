@@ -36,12 +36,10 @@
 
     <build>
         <plugins>
-            <!-- Plugin JaCoCo pour l'agrégation des rapports de couverture -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <executions>
-                    <!-- Exécution d'agrégation des rapports JaCoCo -->
                     <execution>
                         <id>report-aggregate</id>
                         <phase>verify</phase>
@@ -54,7 +52,6 @@
                                 <format>CSV</format>
                                 <format>HTML</format>
                             </formats>
-                            <!-- Le répertoire où le rapport agrégé sera généré -->
                             <outputDirectory>${project.build.directory}/site/jacoco-aggregate</outputDirectory>
                         </configuration>
                     </execution>
