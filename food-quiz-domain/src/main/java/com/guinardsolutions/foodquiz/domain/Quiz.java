@@ -34,7 +34,7 @@ public class Quiz {
     public boolean answer(String answer) {
         Question question = questions.get(index);
         boolean result = question.answer(answer);
-        quizReview.addUserAnswer(question, answer);
+        quizReview.addUserAnswer(question, answer, result);
 
         return result;
     }

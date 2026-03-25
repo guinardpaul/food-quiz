@@ -22,8 +22,8 @@ public class QuizReview {
         return score;
     }
 
-    public void addUserAnswer(Question question, String userAnswer) {
-        questionReview.add(new QuestionReview(question, userAnswer));
+    public void addUserAnswer(Question question, String userAnswer, boolean result) {
+        questionReview.add(new QuestionReview(question, userAnswer, result));
     }
 
     public List<QuestionReview> getQuestionReview() {
