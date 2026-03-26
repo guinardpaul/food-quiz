@@ -1,7 +1,7 @@
 package com.guinardsolutions.foodquiz.api.controller;
 
-import com.guinardsolutions.foodquiz.api.QuizMapper;
 import com.guinardsolutions.foodquiz.api.dto.QuizDto;
+import com.guinardsolutions.foodquiz.api.mapper.QuizMapper;
 import com.guinardsolutions.foodquiz.application.usecase.StartQuizUseCase;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
