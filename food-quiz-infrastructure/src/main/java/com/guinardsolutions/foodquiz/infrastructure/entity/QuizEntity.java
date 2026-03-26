@@ -15,7 +15,7 @@ public class QuizEntity {
     @Column(name = "quiz_id", unique = true, nullable = false)
     private String quizId;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.DETACH, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true)
     private List<QuestionEntity> questions;
 
     public QuizEntity(long id, String quizId, List<QuestionEntity> questions) {
