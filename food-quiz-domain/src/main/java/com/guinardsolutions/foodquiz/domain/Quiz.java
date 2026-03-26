@@ -1,17 +1,20 @@
 package com.guinardsolutions.foodquiz.domain;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Quiz {
 
+    private final QuizId quizId;
     private final List<Question> questions;
     private final QuizReview quizReview;
     private int index = -1;
 
-    public Quiz(List<Question> questions) {
+    public Quiz(String uuid, List<Question> questions) {
         if (questions.isEmpty()) {
             throw new IllegalArgumentException("A Quiz must have at least one question");
         }
+        this.quizId = new QuizId(UUID.fromString(uuid));
         this.questions = questions;
         this.quizReview = new QuizReview(questions.size());
     }
@@ -53,5 +56,9 @@ public class Quiz {
 
     public QuizReview getQuizReview() {
         return quizReview;
+    }
+
+    public UUID getQuizId() {
+        return quizId.value();
     }
 }

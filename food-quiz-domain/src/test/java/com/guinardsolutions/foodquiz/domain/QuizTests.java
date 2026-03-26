@@ -3,6 +3,7 @@ package com.guinardsolutions.foodquiz.domain;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,7 +12,7 @@ class QuizTests {
 
     @Test
     void should_start_a_quiz_and_return_first_question() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
 
         Question question = quiz.currentQuestion();
         assertThat(question.getLabel()).isEqualTo("Q1");
@@ -20,14 +21,14 @@ class QuizTests {
     @Test
     void should_have_at_least_one_question() {
         List<Question> questions = List.of();
-        assertThatThrownBy(() -> new Quiz(questions))
+        assertThatThrownBy(() -> new Quiz(UUID.randomUUID().toString(), questions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("A Quiz must have at least one question");
     }
 
     @Test
     void should_accept_correct_answer() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
         quiz.currentQuestion();
 
         boolean result = quiz.answer("A");
@@ -36,7 +37,7 @@ class QuizTests {
 
     @Test
     void should_refuse_incorrect_answer() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "B")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "B")));
         quiz.currentQuestion();
 
         boolean result = quiz.answer("A");
@@ -45,7 +46,7 @@ class QuizTests {
 
     @Test
     void should_get_next_question_after_answering() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "B"))
         );
@@ -64,7 +65,7 @@ class QuizTests {
 
     @Test
     void should_not_allow_to_get_next_question_if_current_is_not_answered() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "B")
         ));
@@ -77,7 +78,7 @@ class QuizTests {
 
     @Test
     void should_know_if_there_is_questions_left() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "B")
         ));
@@ -98,7 +99,7 @@ class QuizTests {
 
     @Test
     void should_know_when_theres_no_question_left() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
 
         quiz.currentQuestion();
         assertThatThrownBy(quiz::currentQuestion)
@@ -108,7 +109,7 @@ class QuizTests {
 
     @Test
     void should_know_proposed_answers_when_getting_a_question() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
         Question q = quiz.currentQuestion();
 
         List<String> proposedAnswers = ((ChoiceQuestion) q).getProposedAnswers();
@@ -120,7 +121,7 @@ class QuizTests {
 
     @Test
     void cannot_get_score_if_quiz_is_not_finished_question_not_answered() {
-        Quiz quiz = new Quiz(List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createChoiceQuestion("Q1", List.of("A","B"), "A")));
         quiz.currentQuestion();
 
         assertThatThrownBy(quiz::getScore)
@@ -130,7 +131,7 @@ class QuizTests {
 
     @Test
     void cannot_get_score_if_quiz_is_not_finished_question_left() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "A")
         ));
@@ -144,7 +145,7 @@ class QuizTests {
 
     @Test
     void should_get_score_when_quiz_end() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "B"),
                 createChoiceQuestion("Q3", List.of("A","B"), "A")
@@ -165,7 +166,7 @@ class QuizTests {
 
     @Test
     void should_get_quiz_review_at_the_end() {
-        Quiz quiz = new Quiz(List.of(
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(
                 createChoiceQuestion("Q1", List.of("A","B"), "A"),
                 createChoiceQuestion("Q2", List.of("A","B"), "B"),
                 createChoiceQuestion("Q3", List.of("A","B"), "A")
@@ -187,7 +188,7 @@ class QuizTests {
 
     @Test
     void should_throw_exception_if_numberquestion_answer_is_not_a_number() {
-        Quiz quiz = new Quiz(List.of(createNumberQuestion()));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createNumberQuestion()));
 
         quiz.currentQuestion();
         assertThatThrownBy(() -> quiz.answer("NotANumber"))
@@ -197,7 +198,7 @@ class QuizTests {
 
     @Test
     void should_numberQuestion_be_correct_given_a_tolerance() {
-        Quiz quiz = new Quiz(List.of(createNumberQuestion()));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createNumberQuestion()));
 
         quiz.currentQuestion();
         boolean res = quiz.answer("17");
@@ -206,7 +207,7 @@ class QuizTests {
 
     @Test
     void should_numberQuestion_be_incorrect() {
-        Quiz quiz = new Quiz(List.of(createNumberQuestion()));
+        Quiz quiz = new Quiz(UUID.randomUUID().toString(), List.of(createNumberQuestion()));
 
         quiz.currentQuestion();
         boolean res = quiz.answer("15");
