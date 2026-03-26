@@ -16,6 +16,7 @@ public class QuizEntity {
     private String quizId;
 
     @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true)
+    @JoinColumn(name = "quiz_id")
     private List<QuestionEntity> questions;
 
     public QuizEntity(long id, String quizId, List<QuestionEntity> questions) {

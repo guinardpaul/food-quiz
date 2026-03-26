@@ -30,7 +30,8 @@
 		<module>food-quiz-api</module>
 		<module>food-quiz-architecture-tests</module>
 		<module>food-quiz-tests-report</module>
-	</modules>
+        <module>food-quiz-docker</module>
+    </modules>
 
     <scm>
 		<connection/>

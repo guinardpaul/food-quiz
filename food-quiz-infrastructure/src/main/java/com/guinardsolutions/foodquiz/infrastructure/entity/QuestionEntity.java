@@ -1,5 +1,6 @@
 package com.guinardsolutions.foodquiz.infrastructure.entity;
 
+import com.guinardsolutions.foodquiz.domain.Quiz;
 import jakarta.persistence.*;
 
 @Entity
