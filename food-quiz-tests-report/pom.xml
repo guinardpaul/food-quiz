@@ -47,6 +47,9 @@
                             <goal>report-aggregate</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>**/FoodQuizApplication.class</exclude>
+                            </excludes>
                             <formats>
                                 <format>XML</format>
                                 <format>CSV</format>
