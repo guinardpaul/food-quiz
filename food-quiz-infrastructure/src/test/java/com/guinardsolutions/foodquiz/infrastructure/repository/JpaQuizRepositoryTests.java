@@ -1,12 +1,10 @@
-package com.guinardsolutions.foodquiz.infrastructure;
+package com.guinardsolutions.foodquiz.infrastructure.repository;
 
 import com.guinardsolutions.foodquiz.domain.Quiz;
 import com.guinardsolutions.foodquiz.infrastructure.entity.ChoiceQuestionEntity;
 import com.guinardsolutions.foodquiz.infrastructure.entity.NumberQuestionEntity;
 import com.guinardsolutions.foodquiz.infrastructure.entity.QuestionEntity;
 import com.guinardsolutions.foodquiz.infrastructure.entity.QuizEntity;
-import com.guinardsolutions.foodquiz.infrastructure.repository.JpaQuizRepository;
-import com.guinardsolutions.foodquiz.infrastructure.repository.SpringDataQuizRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -19,20 +19,18 @@ public class QuizMapper {
     }
 
     public Question toDomain(QuestionEntity questionEntity) {
-        if (questionEntity instanceof ChoiceQuestionEntity choiceQuestionEntity) {
-            return new ChoiceQuestion(
+        return switch (questionEntity) {
+            case ChoiceQuestionEntity choiceQuestionEntity -> new ChoiceQuestion(
                     choiceQuestionEntity.getLabel(),
                     choiceQuestionEntity.getProposedAnswer(),
                     choiceQuestionEntity.getCorrectAnswer()
             );
-        } else if (questionEntity instanceof NumberQuestionEntity numberQuestionEntity) {
-            return new NumberQuestion(
+            case NumberQuestionEntity numberQuestionEntity -> new NumberQuestion(
                     numberQuestionEntity.getLabel(),
                     numberQuestionEntity.getExpectedValue(),
                     numberQuestionEntity.getTolerance()
             );
-        } else {
-            throw new IllegalArgumentException("Not implemented yet");
-        }
+            default -> throw new IllegalArgumentException("Not implemented yet");
+        };
     }
 }

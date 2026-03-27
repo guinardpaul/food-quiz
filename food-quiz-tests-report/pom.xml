@@ -47,15 +47,15 @@
                             <goal>report-aggregate</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>**/FoodQuizApplication.class</exclude>
+                            </excludes>
                             <formats>
                                 <format>XML</format>
                                 <format>CSV</format>
                                 <format>HTML</format>
                             </formats>
                             <outputDirectory>${project.build.directory}/site/jacoco-aggregate</outputDirectory>
-                            <excludes>
-                                <exclude>**/FoodQuizApplication.java</exclude>
-                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
