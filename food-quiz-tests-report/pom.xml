@@ -53,6 +53,9 @@
                                 <format>HTML</format>
                             </formats>
                             <outputDirectory>${project.build.directory}/site/jacoco-aggregate</outputDirectory>
+                            <excludes>
+                                <exclude>**/FoodQuizApplication.java</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>

@@ -19,6 +19,9 @@ public class QuizEntity {
     @JoinColumn(name = "quiz_id")
     private List<QuestionEntity> questions;
 
+    public QuizEntity() {
+    }
+
     public QuizEntity(long id, String quizId, List<QuestionEntity> questions) {
         this.id = id;
         this.quizId = quizId;

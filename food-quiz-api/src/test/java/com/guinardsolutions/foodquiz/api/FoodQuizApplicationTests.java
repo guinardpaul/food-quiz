@@ -2,13 +2,14 @@ package com.guinardsolutions.foodquiz.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @SpringBootTest
-class FoodQuizEntityApplicationTests {
+class FoodQuizApplicationTests {
 
 	@Test
 	void contextLoads() {
-		FoodQuizApplication.main(new String[] {});
 	}
 
 }

@@ -10,6 +10,9 @@ public class NumberQuestionEntity extends QuestionEntity {
     private double expectedValue;
     private double tolerance;
 
+    public NumberQuestionEntity() {
+    }
+
     public NumberQuestionEntity(Long id, String label, double expectedValue, double tolerance) {
         super(id, label);
         this.expectedValue = expectedValue;

@@ -1,6 +1,5 @@
 package com.guinardsolutions.foodquiz.infrastructure.entity;
 
-import com.guinardsolutions.foodquiz.domain.Quiz;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,11 +10,14 @@ public abstract class QuestionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String label;
+    protected String label;
 
-    public QuestionEntity(Long id, String label) {
+    protected QuestionEntity() {
+    }
+
+    protected QuestionEntity(Long id, String label) {
         this.id = id;
         this.label = label;
     }

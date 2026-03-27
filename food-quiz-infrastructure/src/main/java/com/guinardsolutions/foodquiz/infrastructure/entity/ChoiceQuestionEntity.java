@@ -12,6 +12,9 @@ public class ChoiceQuestionEntity extends QuestionEntity {
     private List<String> proposedAnswer;
     private String correctAnswer;
 
+    public ChoiceQuestionEntity() {
+    }
+
     public ChoiceQuestionEntity(Long id, String label, List<String> proposedAnswer, String correctAnswer) {
         super(id, label);
         this.proposedAnswer = proposedAnswer;
