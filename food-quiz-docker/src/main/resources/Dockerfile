@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # build uniquement le module api (et ses deps)
-RUN mvn -pl 'food-quiz-api' -am clean package -DskipTests
+RUN mvn -pl 'food-quiz-bootstrap' -am clean package -DskipTests
 
 
 # -------- STAGE 2 : runtime --------
@@ -16,6 +16,6 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # récupérer le jar buildé
-COPY --from=build /app/food-quiz-api/target/food-quiz-api-*.jar app.jar
+COPY --from=build /app/food-quiz-bootstrap/target/food-quiz-bootstrap-*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
