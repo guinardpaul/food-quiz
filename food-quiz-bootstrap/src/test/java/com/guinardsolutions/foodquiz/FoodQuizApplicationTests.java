@@ -1,4 +1,4 @@
-package com.guinardsolutions.foodquiz.api;
+package com.guinardsolutions.foodquiz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
