@@ -4,10 +4,13 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: changeit
+    password: password
   jpa:
     hibernate:
       ddl-auto: create-drop
   sql:
     init:
       platform: dev
+
+server:
+  port: 8080
