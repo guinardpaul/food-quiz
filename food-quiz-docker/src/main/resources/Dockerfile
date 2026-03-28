@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # build uniquement le module api (et ses deps)
-RUN mvn -pl !'food-quiz-docker' clean package -DskipTests
+RUN mvn -pl 'food-quiz-api' -am clean package -DskipTests
 
 
 # -------- STAGE 2 : runtime --------
