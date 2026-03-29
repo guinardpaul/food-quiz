@@ -7,10 +7,13 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   sql:
     init:
       platform: dev
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
 
 server:
   port: 8080
@@ -20,7 +23,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,liquibase
   endpoint:
     health:
       show-details: always
