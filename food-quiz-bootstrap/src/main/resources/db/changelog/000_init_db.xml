@@ -21,7 +21,7 @@
             <column name="expected_value" type="float8" />
             <column name="tolerance" type="float8" />
             <column name="correct_answer" type="varchar(255)" />
-            <column name="proposed_answer" type="jsonb" />
+            <column name="proposed_answer" type="json" />
             <column name="quiz_id" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
