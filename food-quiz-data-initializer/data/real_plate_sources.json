@@ -1,0 +1,86 @@
+{
+  "namespace_uuid": "ea5b5dc5-13b5-4f8e-a169-7d0bfaea4b2f",
+  "provider": "TheMealDB",
+  "provider_api": "https://www.themealdb.com/api/json/v1/1/lookup.php?i={meal_id}",
+  "image_mode": "remote_url",
+  "plates": [
+    {
+      "slug": "teriyaki-chicken-casserole",
+      "provider_meal_id": "52772",
+      "title": "Teriyaki Chicken Casserole",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
+      "source_url": "https://www.themealdb.com/meal/52772",
+      "food_items": [
+        {"name": "riz cuit", "estimated_weight_g": 180, "carbs_per_100g": 28.0, "carbohydrate_source": true},
+        {"name": "poulet", "estimated_weight_g": 130, "carbs_per_100g": 0.0, "carbohydrate_source": false},
+        {"name": "légumes mélangés", "estimated_weight_g": 90, "carbs_per_100g": 7.0, "carbohydrate_source": false},
+        {"name": "sauce teriyaki", "estimated_weight_g": 35, "carbs_per_100g": 22.0, "carbohydrate_source": true}
+      ]
+    },
+    {
+      "slug": "spicy-arrabiata-penne",
+      "provider_meal_id": "52771",
+      "title": "Spicy Arrabiata Penne",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg",
+      "source_url": "https://www.themealdb.com/meal/52771",
+      "food_items": [
+        {"name": "penne cuites", "estimated_weight_g": 220, "carbs_per_100g": 30.0, "carbohydrate_source": true},
+        {"name": "sauce tomate", "estimated_weight_g": 120, "carbs_per_100g": 5.0, "carbohydrate_source": false},
+        {"name": "parmesan", "estimated_weight_g": 15, "carbs_per_100g": 4.0, "carbohydrate_source": false}
+      ]
+    },
+    {
+      "slug": "lasagne",
+      "provider_meal_id": "52844",
+      "title": "Lasagne",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/wtsvxx1511296896.jpg",
+      "source_url": "https://www.themealdb.com/meal/52844",
+      "food_items": [
+        {"name": "pâtes à lasagne", "estimated_weight_g": 160, "carbs_per_100g": 31.0, "carbohydrate_source": true},
+        {"name": "sauce bolognaise", "estimated_weight_g": 180, "carbs_per_100g": 6.0, "carbohydrate_source": false},
+        {"name": "béchamel", "estimated_weight_g": 80, "carbs_per_100g": 8.0, "carbohydrate_source": false},
+        {"name": "fromage", "estimated_weight_g": 35, "carbs_per_100g": 2.0, "carbohydrate_source": false}
+      ]
+    },
+    {
+      "slug": "beef-sunday-roast",
+      "provider_meal_id": "52824",
+      "title": "Beef Sunday Roast",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/ssrrrs1503664277.jpg",
+      "source_url": "https://www.themealdb.com/meal/52824",
+      "food_items": [
+        {"name": "pommes de terre rôties", "estimated_weight_g": 210, "carbs_per_100g": 20.0, "carbohydrate_source": true},
+        {"name": "boeuf rôti", "estimated_weight_g": 150, "carbs_per_100g": 0.0, "carbohydrate_source": false},
+        {"name": "carottes", "estimated_weight_g": 80, "carbs_per_100g": 7.0, "carbohydrate_source": false},
+        {"name": "petits pois", "estimated_weight_g": 70, "carbs_per_100g": 8.0, "carbohydrate_source": false},
+        {"name": "gravy", "estimated_weight_g": 50, "carbs_per_100g": 6.0, "carbohydrate_source": false}
+      ]
+    },
+    {
+      "slug": "koshari",
+      "provider_meal_id": "53027",
+      "title": "Koshari",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/4er7mj1598733193.jpg",
+      "source_url": "https://www.themealdb.com/meal/53027",
+      "food_items": [
+        {"name": "riz", "estimated_weight_g": 140, "carbs_per_100g": 28.0, "carbohydrate_source": true},
+        {"name": "lentilles", "estimated_weight_g": 120, "carbs_per_100g": 16.0, "carbohydrate_source": true},
+        {"name": "pâtes", "estimated_weight_g": 90, "carbs_per_100g": 30.0, "carbohydrate_source": true},
+        {"name": "pois chiches", "estimated_weight_g": 60, "carbs_per_100g": 17.0, "carbohydrate_source": true},
+        {"name": "sauce tomate", "estimated_weight_g": 80, "carbs_per_100g": 5.0, "carbohydrate_source": false}
+      ]
+    },
+    {
+      "slug": "pancakes",
+      "provider_meal_id": "52854",
+      "title": "Pancakes",
+      "fallback_image_url": "https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg",
+      "source_url": "https://www.themealdb.com/meal/52854",
+      "food_items": [
+        {"name": "pancakes", "estimated_weight_g": 180, "carbs_per_100g": 29.0, "carbohydrate_source": true},
+        {"name": "sirop", "estimated_weight_g": 35, "carbs_per_100g": 67.0, "carbohydrate_source": true},
+        {"name": "fruits rouges", "estimated_weight_g": 70, "carbs_per_100g": 9.0, "carbohydrate_source": false}
+      ]
+    }
+  ]
+}

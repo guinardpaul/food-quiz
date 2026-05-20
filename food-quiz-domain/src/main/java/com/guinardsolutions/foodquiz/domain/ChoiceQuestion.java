@@ -8,7 +8,11 @@ public class ChoiceQuestion extends Question {
     private final String correctAnswer;
 
     public ChoiceQuestion(String label, List<String> proposedAnswers, String correctAnswer) {
-        super(label);
+        this(label, null, proposedAnswers, correctAnswer);
+    }
+
+    public ChoiceQuestion(String label, String imageUrl, List<String> proposedAnswers, String correctAnswer) {
+        super(label, imageUrl);
         this.proposedAnswers = proposedAnswers;
         this.correctAnswer = correctAnswer;
     }

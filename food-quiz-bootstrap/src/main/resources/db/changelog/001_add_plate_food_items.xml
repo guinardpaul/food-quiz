@@ -1,32 +1,24 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="20260329-init-database" author="guinardpaul">
-        <createTable tableName="quiz">
+    <changeSet id="20260518-add-plate-food-items" author="codex">
+        <createTable tableName="plate_food_items">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="quiz_id" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-        </createTable>
-
-        <createTable tableName="questions">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
-            </column>
-            <column name="label" type="varchar(255)">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="image_url" type="varchar(512)" />
-            <column name="expected_value" type="float8" />
-            <column name="tolerance" type="float8" />
-            <column name="correct_answer" type="varchar(255)" />
-            <column name="proposed_answer" type="json" />
-            <column name="quiz_id" type="varchar(255)">
+            <column name="estimated_weight_g" type="float8">
                 <constraints nullable="false" />
             </column>
-            <column name="question_type" type="varchar(255)">
+            <column name="estimated_carbs_g" type="float8">
+                <constraints nullable="false" />
+            </column>
+            <column name="carbohydrate_source" type="boolean">
                 <constraints nullable="false" />
             </column>
         </createTable>

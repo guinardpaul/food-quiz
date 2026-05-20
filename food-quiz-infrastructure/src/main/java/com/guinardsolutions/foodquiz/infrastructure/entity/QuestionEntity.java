@@ -14,12 +14,20 @@ public abstract class QuestionEntity {
 
     protected String label;
 
+    @Column(name = "image_url")
+    protected String imageUrl;
+
     protected QuestionEntity() {
     }
 
     protected QuestionEntity(Long id, String label) {
+        this(id, label, null);
+    }
+
+    protected QuestionEntity(Long id, String label, String imageUrl) {
         this.id = id;
         this.label = label;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -28,6 +36,10 @@ public abstract class QuestionEntity {
 
     public String getLabel() {
         return label;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
 }

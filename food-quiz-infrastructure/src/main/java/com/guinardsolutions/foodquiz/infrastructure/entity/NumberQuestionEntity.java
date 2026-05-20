@@ -14,7 +14,11 @@ public class NumberQuestionEntity extends QuestionEntity {
     }
 
     public NumberQuestionEntity(Long id, String label, double expectedValue, double tolerance) {
-        super(id, label);
+        this(id, label, null, expectedValue, tolerance);
+    }
+
+    public NumberQuestionEntity(Long id, String label, String imageUrl, double expectedValue, double tolerance) {
+        super(id, label, imageUrl);
         this.expectedValue = expectedValue;
         this.tolerance = tolerance;
     }

@@ -2,5 +2,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="000_init_db.xml" relativeToChangelogFile="true" />
+    <include file="001_add_plate_food_items.xml" relativeToChangelogFile="true" />
+    <include file="002_seed_real_food_quizzes.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
