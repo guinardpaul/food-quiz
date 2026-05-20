@@ -6,7 +6,11 @@ public class NumberQuestion extends Question {
     private final double tolerance;
 
     public NumberQuestion(String label, double expectedValue, double tolerance) {
-        super(label);
+        this(label, null, expectedValue, tolerance);
+    }
+
+    public NumberQuestion(String label, String imageUrl, double expectedValue, double tolerance) {
+        super(label, imageUrl);
         this.expectedValue = expectedValue;
         this.tolerance = tolerance;
     }
@@ -20,6 +24,7 @@ public class NumberQuestion extends Question {
             throw new IllegalArgumentException("Answer is not a number");
         }
 
+        this.answered = true;
         return Math.abs(expectedValue - number) <= tolerance;
     }
 }

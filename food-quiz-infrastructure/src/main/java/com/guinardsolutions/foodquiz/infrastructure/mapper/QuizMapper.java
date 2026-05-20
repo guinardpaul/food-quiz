@@ -22,11 +22,13 @@ public class QuizMapper {
         return switch (questionEntity) {
             case ChoiceQuestionEntity choiceQuestionEntity -> new ChoiceQuestion(
                     choiceQuestionEntity.getLabel(),
+                    choiceQuestionEntity.getImageUrl(),
                     choiceQuestionEntity.getProposedAnswer(),
                     choiceQuestionEntity.getCorrectAnswer()
             );
             case NumberQuestionEntity numberQuestionEntity -> new NumberQuestion(
                     numberQuestionEntity.getLabel(),
+                    numberQuestionEntity.getImageUrl(),
                     numberQuestionEntity.getExpectedValue(),
                     numberQuestionEntity.getTolerance()
             );

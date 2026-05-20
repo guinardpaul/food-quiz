@@ -16,7 +16,11 @@ public class ChoiceQuestionEntity extends QuestionEntity {
     }
 
     public ChoiceQuestionEntity(Long id, String label, List<String> proposedAnswer, String correctAnswer) {
-        super(id, label);
+        this(id, label, null, proposedAnswer, correctAnswer);
+    }
+
+    public ChoiceQuestionEntity(Long id, String label, String imageUrl, List<String> proposedAnswer, String correctAnswer) {
+        super(id, label, imageUrl);
         this.proposedAnswer = proposedAnswer;
         this.correctAnswer = correctAnswer;
     }
