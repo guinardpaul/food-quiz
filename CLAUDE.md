@@ -11,9 +11,22 @@ Food Quiz is a Spring Boot REST server for a quiz game focused on learning Funct
 - **Schema migrations**: Liquibase
 - **Base package**: `com.guinardsolutions.foodquiz`
 
+## Repository Structure
+
+This is a monorepo with separate deployment targets:
+
+```
+food-quiz/
+├── backend/        # Spring Boot API (deploy to Render)
+├── frontend/       # Angular app (deploy to Vercel)
+├── tools/          # Dev tooling (data generation scripts, etc.)
+└── .github/
+    └── workflows/  # CI workflows (path-filtered per sub-project)
+```
+
 ## Module Structure
 
-The project is a Maven multi-module build. Each module maps to a clean architecture layer:
+The backend is a Maven multi-module build under `backend/`. Each module maps to a clean architecture layer:
 
 | Module | Role |
 |---|---|
@@ -25,7 +38,7 @@ The project is a Maven multi-module build. Each module maps to a clean architect
 | `food-quiz-architecture-tests` | ArchUnit tests that enforce layer dependency rules |
 | `food-quiz-tests-report` | JaCoCo aggregate coverage report across all modules |
 
-> `food-quiz-docker` exists in the repository but is currently commented out of the root `pom.xml`.
+> `food-quiz-docker` exists in the repository but is currently commented out of `backend/pom.xml`.
 
 ## Clean Architecture Rules (Enforced by ArchUnit)
 
@@ -102,29 +115,31 @@ Follow this pattern for each new use case (example: `SubmitAnswer`):
 
 ### Build & Test
 
+All Maven commands must be run from the `backend/` directory.
+
 ```bash
 # Full build (compiles, tests, coverage check, architecture tests)
-mvn clean install
+cd backend && mvn clean install
 
 # Same as CI
-mvn -B clean verify
+cd backend && mvn -B clean verify
 
 # Run tests only (no install)
-mvn test
+cd backend && mvn test
 
 # Test a single module
-mvn -pl food-quiz-domain test
+cd backend && mvn -pl food-quiz-domain test
 
 # Skip tests (use sparingly)
-mvn clean install -DskipTests
+cd backend && mvn clean install -DskipTests
 ```
 
 ### Running Locally
 
-Requires a PostgreSQL instance running on `localhost:5432` with database `postgres`, user `postgres`, password `password` (see `food-quiz-bootstrap/src/main/resources/application.yaml`).
+Requires a PostgreSQL instance running on `localhost:5432` with database `postgres`, user `postgres`, password `password` (see `backend/food-quiz-bootstrap/src/main/resources/application.yaml`).
 
 ```bash
-cd food-quiz-bootstrap
+cd backend/food-quiz-bootstrap
 mvn spring-boot:run
 ```
 
@@ -137,7 +152,7 @@ The server starts on **port 8080**. Available endpoints:
 
 After running `mvn verify`, the aggregate HTML report is at:
 ```
-food-quiz-tests-report/target/site/jacoco-aggregate/index.html
+backend/food-quiz-tests-report/target/site/jacoco-aggregate/index.html
 ```
 
 CI fails if overall coverage or per-file coverage for changed files drops below **80%**.
@@ -147,14 +162,14 @@ CI fails if overall coverage or per-file coverage for changed files drops below 
 ### Schema Migrations
 Liquibase manages all schema changes. Add new changelogs in:
 ```
-food-quiz-bootstrap/src/main/resources/db/changelog/
+backend/food-quiz-bootstrap/src/main/resources/db/changelog/
 ```
 Register each new file in `db.changelog-master.xml`. Never modify `ddl-auto` — it is set to `none`.
 
 ### Test Database
 Tests use H2 in-memory database via the `test` Spring profile. Test configuration is in:
 ```
-food-quiz-bootstrap/src/test/resources/application-test.yaml
+backend/food-quiz-bootstrap/src/test/resources/application-test.yaml
 ```
 Test classes use `@ActiveProfiles("test")`.
 
@@ -164,7 +179,7 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
 
 - Triggers on push to `main` and pull requests targeting `main`
 - JDK: Temurin 25
-- Step: `mvn -B clean verify` (includes unit tests, integration tests, architecture tests, JaCoCo)
+- Step: `mvn -B clean verify` run from `working-directory: backend` (includes unit tests, integration tests, architecture tests, JaCoCo)
 - Coverage gate: 80% overall and 80% on changed files (posted as a PR comment via `jacoco-report` action)
 - Additional workflows: dependency review (security), auto-assign, PR labeler, Dependabot
 
