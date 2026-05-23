@@ -42,6 +42,11 @@ public class Quiz {
         return result;
     }
 
+    public Question peekCurrentQuestion() {
+        if (index < 0) throw new IllegalStateException("No current question");
+        return questions.get(index);
+    }
+
     public boolean hasQuestionLeft() {
         return (index + 1) < questions.size();
     }

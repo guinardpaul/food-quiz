@@ -1,6 +1,7 @@
 package com.guinardsolutions.foodquiz.infrastructure.mapper;
 
 import com.guinardsolutions.foodquiz.domain.ChoiceQuestion;
+import com.guinardsolutions.foodquiz.domain.GlycemicImpact;
 import com.guinardsolutions.foodquiz.domain.NumberQuestion;
 import com.guinardsolutions.foodquiz.domain.Question;
 import com.guinardsolutions.foodquiz.domain.Quiz;
@@ -20,11 +21,21 @@ public class QuizMapper {
 
     public Question toDomain(QuestionEntity questionEntity) {
         return switch (questionEntity) {
-            case ChoiceQuestionEntity choiceQuestionEntity -> new ChoiceQuestion(
-                    choiceQuestionEntity.getLabel(),
-                    choiceQuestionEntity.getProposedAnswer(),
-                    choiceQuestionEntity.getCorrectAnswer()
-            );
+            case ChoiceQuestionEntity choiceQuestionEntity -> {
+                GlycemicImpact impact = choiceQuestionEntity.getGlycemicImpact() != null
+                        ? GlycemicImpact.valueOf(choiceQuestionEntity.getGlycemicImpact())
+                        : null;
+                yield new ChoiceQuestion(
+                        choiceQuestionEntity.getLabel(),
+                        choiceQuestionEntity.getImageUrl(),
+                        choiceQuestionEntity.getFoodName(),
+                        choiceQuestionEntity.getPortionDescription(),
+                        choiceQuestionEntity.getProposedAnswer(),
+                        choiceQuestionEntity.getCorrectAnswer(),
+                        choiceQuestionEntity.getEquivalents(),
+                        impact
+                );
+            }
             case NumberQuestionEntity numberQuestionEntity -> new NumberQuestion(
                     numberQuestionEntity.getLabel(),
                     numberQuestionEntity.getExpectedValue(),
