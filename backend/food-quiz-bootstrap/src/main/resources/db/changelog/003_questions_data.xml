@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260524-questions-data-42073e08" author="guinardpaul">
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Riz blanc cuit"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/327/016/086/6861/front_fr.94.400.jpg"/>
+            <column name="proposed_answer"     value='["20g", "31g", "10g", "45g"]'/>
+            <column name="correct_answer"      value="31g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Pain de mie blanc"/>
+            <column name="portion_description" value="Portion standard (~60g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/322/885/700/0883/front_en.130.400.jpg"/>
+            <column name="proposed_answer"     value='["50g", "10g", "15g", "28g"]'/>
+            <column name="correct_answer"      value="28g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Frites"/>
+            <column name="portion_description" value="Portion standard (~150g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/730/040/048/1588/front_en.269.400.jpg"/>
+            <column name="proposed_answer"     value='["100g", "40g", "120g", "70g"]'/>
+            <column name="correct_answer"      value="70g"/>
+            <column name="equivalents"         value='{"breadSlices": 5, "sugarCubes": 18}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Lentilles cuites"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/327/016/086/5291/front_fr.51.400.jpg"/>
+            <column name="proposed_answer"     value='["15g", "5g", "12g", "20g"]'/>
+            <column name="correct_answer"      value="12g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 3}'/>
+            <column name="glycemic_impact"     value="LOW"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Haricots rouges cuits"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/301/780/007/8846/front_fr.83.400.jpg"/>
+            <column name="proposed_answer"     value='["30g", "22g", "35g", "15g"]'/>
+            <column name="correct_answer"      value="22g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 6}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Flocons d'avoine"/>
+            <column name="portion_description" value="Portion standard (~50g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/322/982/001/9307/front_fr.300.400.jpg"/>
+            <column name="proposed_answer"     value='["29g", "50g", "10g", "15g"]'/>
+            <column name="correct_answer"      value="29g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Corn flakes"/>
+            <column name="portion_description" value="Portion standard (~40g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/315/947/000/0120/front_en.147.400.jpg"/>
+            <column name="proposed_answer"     value='["20g", "60g", "34g", "10g"]'/>
+            <column name="correct_answer"      value="34g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Muesli"/>
+            <column name="portion_description" value="Portion standard (~50g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/316/893/001/0265/front_en.297.400.jpg"/>
+            <column name="proposed_answer"     value='["40g", "10g", "50g", "28g"]'/>
+            <column name="correct_answer"      value="28g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Banane"/>
+            <column name="portion_description" value="Portion standard (~120g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/871/840/388/7518/front_fr.34.400.jpg"/>
+            <column name="proposed_answer"     value='["40g", "67g", "95g", "115g"]'/>
+            <column name="correct_answer"      value="67g"/>
+            <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 17}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Raisin"/>
+            <column name="portion_description" value="Portion standard (~100g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/317/568/185/1856/front_fr.210.400.jpg"/>
+            <column name="proposed_answer"     value='["68g", "40g", "115g", "25g"]'/>
+            <column name="correct_answer"      value="68g"/>
+            <column name="equivalents"         value='{"breadSlices": 5, "sugarCubes": 17}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Jus de pomme"/>
+            <column name="portion_description" value="Portion standard (~200g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/124/386/0383/front_fr.4.400.jpg"/>
+            <column name="proposed_answer"     value='["20g", "10g", "35g", "30g"]'/>
+            <column name="correct_answer"      value="20g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 5}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Pomme"/>
+            <column name="portion_description" value="Portion standard (~150g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/322/982/012/9488/front_fr.238.400.jpg"/>
+            <column name="proposed_answer"     value='["55g", "88g", "150g", "30g"]'/>
+            <column name="correct_answer"      value="88g"/>
+            <column name="equivalents"         value='{"breadSlices": 6, "sugarCubes": 22}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Mangue"/>
+            <column name="portion_description" value="Portion standard (~150g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/112/600/1605/front_fr.24.400.jpg"/>
+            <column name="proposed_answer"     value='["30g", "18g", "25g", "10g"]'/>
+            <column name="correct_answer"      value="18g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
+            <column name="glycemic_impact"     value="LOW"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Pizza margherita"/>
+            <column name="portion_description" value="Portion standard (~200g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/506/019/864/3156/front_en.28.400.jpg"/>
+            <column name="proposed_answer"     value='["85g", "35g", "20g", "60g"]'/>
+            <column name="correct_answer"      value="60g"/>
+            <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 15}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Crêpe sucrée"/>
+            <column name="portion_description" value="Portion standard (~80g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/332/268/001/0801/front_fr.29.400.jpg"/>
+            <column name="proposed_answer"     value='["80g", "65g", "47g", "15g"]'/>
+            <column name="correct_answer"      value="47g"/>
+            <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Gaufre"/>
+            <column name="portion_description" value="Portion standard (~80g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/322/982/079/1081/front_fr.149.400.jpg"/>
+            <column name="proposed_answer"     value='["58g", "100g", "20g", "80g"]'/>
+            <column name="correct_answer"      value="58g"/>
+            <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Yaourt sucré"/>
+            <column name="portion_description" value="Portion standard (~125g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/103/200/8453/front_fr.4.400.jpg"/>
+            <column name="proposed_answer"     value='["15g", "20g", "25g", "10g"]'/>
+            <column name="correct_answer"      value="15g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
+            <column name="glycemic_impact"     value="LOW"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Lait entier"/>
+            <column name="portion_description" value="Portion standard (~250g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/124/210/0206/front_en.38.400.jpg"/>
+            <column name="proposed_answer"     value='["20g", "35g", "10g", "30g"]'/>
+            <column name="correct_answer"      value="20g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 5}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Biscuits secs"/>
+            <column name="portion_description" value="Portion standard (~40g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/125/934/2828/front_en.30.400.jpg"/>
+            <column name="proposed_answer"     value='["35g", "15g", "24g", "40g"]'/>
+            <column name="correct_answer"      value="24g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Chocolat au lait"/>
+            <column name="portion_description" value="Portion standard (~30g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/317/568/001/1534/front_fr.186.400.jpg"/>
+            <column name="proposed_answer"     value='["10g", "30g", "20g", "35g"]'/>
+            <column name="correct_answer"      value="20g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 5}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Miel"/>
+            <column name="portion_description" value="Portion standard (~20g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/841/007/660/1131/front_fr.133.400.jpg"/>
+            <column name="proposed_answer"     value='["10g", "13g", "20g", "5g"]'/>
+            <column name="correct_answer"      value="13g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 3}'/>
+            <column name="glycemic_impact"     value="LOW"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Confiture"/>
+            <column name="portion_description" value="Portion standard (~30g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/611/116/200/0839/front_fr.52.400.jpg"/>
+            <column name="proposed_answer"     value='["5g", "30g", "18g", "25g"]'/>
+            <column name="correct_answer"      value="18g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
+            <column name="glycemic_impact"     value="LOW"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Semoule cuite"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/356/007/048/2757/front_fr.56.400.jpg"/>
+            <column name="proposed_answer"     value='["35g", "22g", "15g", "10g"]'/>
+            <column name="correct_answer"      value="22g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 6}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Quinoa cuit"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/324/541/121/7969/front_fr.57.400.jpg"/>
+            <column name="proposed_answer"     value='["15g", "22g", "10g", "35g"]'/>
+            <column name="correct_answer"      value="22g"/>
+            <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 6}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Boulgour cuit"/>
+            <column name="portion_description" value="Portion standard (~180g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/359/671/047/2284/front_fr.54.400.jpg"/>
+            <column name="proposed_answer"     value='["15g", "45g", "10g", "27g"]'/>
+            <column name="correct_answer"      value="27g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Muffin"/>
+            <column name="portion_description" value="Portion standard (~90g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/317/853/040/8515/front_en.105.400.jpg"/>
+            <column name="proposed_answer"     value='["30g", "65g", "46g", "80g"]'/>
+            <column name="correct_answer"      value="46g"/>
+            <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Riz au lait"/>
+            <column name="portion_description" value="Portion standard (~150g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/302/329/003/6686/front_en.67.400.jpg"/>
+            <column name="proposed_answer"     value='["38g", "55g", "15g", "65g"]'/>
+            <column name="correct_answer"      value="38g"/>
+            <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Glace vanille"/>
+            <column name="portion_description" value="Portion standard (~100g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/871/132/760/8665/front_fr.25.400.jpg"/>
+            <column name="proposed_answer"     value='["32g", "55g", "20g", "45g"]'/>
+            <column name="correct_answer"      value="32g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Pancakes"/>
+            <column name="portion_description" value="Portion standard (~120g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/318/767/000/2347/front_fr.188.400.jpg"/>
+            <column name="proposed_answer"     value='["20g", "95g", "75g", "55g"]'/>
+            <column name="correct_answer"      value="55g"/>
+            <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
+            <column name="glycemic_impact"     value="HIGH"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="question_type"       value="CHOICE"/>
+            <column name="quiz_id"             value="11111111-1111-1111-1111-111111111111"/>
+            <column name="label"               value="Combien de glucides environ ?"/>
+            <column name="food_name"           value="Brioche"/>
+            <column name="portion_description" value="Portion standard (~60g)"/>
+            <column name="image_url"           value="https://images.openfoodfacts.org/images/products/328/423/000/6408/front_en.160.400.jpg"/>
+            <column name="proposed_answer"     value='["10g", "31g", "55g", "45g"]'/>
+            <column name="correct_answer"      value="31g"/>
+            <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
+            <column name="glycemic_impact"     value="MEDIUM"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
