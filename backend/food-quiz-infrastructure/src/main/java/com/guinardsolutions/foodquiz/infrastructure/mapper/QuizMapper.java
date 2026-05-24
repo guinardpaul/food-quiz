@@ -8,14 +8,16 @@ import com.guinardsolutions.foodquiz.domain.Quiz;
 import com.guinardsolutions.foodquiz.infrastructure.entity.ChoiceQuestionEntity;
 import com.guinardsolutions.foodquiz.infrastructure.entity.NumberQuestionEntity;
 import com.guinardsolutions.foodquiz.infrastructure.entity.QuestionEntity;
-import com.guinardsolutions.foodquiz.infrastructure.entity.QuizEntity;
+
+import java.util.List;
+import java.util.UUID;
 
 public class QuizMapper {
 
-    public Quiz toDomain(QuizEntity quizEntity) {
+    public Quiz toDomain(List<QuestionEntity> entities) {
         return new Quiz(
-                quizEntity.getQuizId(),
-                quizEntity.getQuestions().stream().map(this::toDomain).toList()
+                UUID.randomUUID().toString(),
+                entities.stream().map(this::toDomain).toList()
         );
     }
 

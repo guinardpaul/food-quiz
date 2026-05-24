@@ -31,6 +31,8 @@
   }
 
   <button class="btn btn--primary" (click)="start()" [disabled]="loading()">
-    {{ loading() ? 'Chargement...' : 'Démarrer le quiz' }}
+    {{ loading() ? 'Chargement...' : 'Démarrer (' + settings.questionCount() + ' questions)' }}
   </button>
+
+  <a class="home__settings-link" routerLink="/config">Paramètres</a>
 </div>

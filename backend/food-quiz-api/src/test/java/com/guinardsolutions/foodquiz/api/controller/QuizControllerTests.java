@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,13 +48,42 @@ class QuizControllerTests {
     private GetQuizResultUseCase getQuizResultUseCase;
 
     @Test
-    void should_return_quizDto_when_starting_quiz() throws Exception {
+    void should_return_quizDto_when_starting_quiz_with_default_count() throws Exception {
         String id = UUID.randomUUID().toString();
-        when(startQuizUseCase.startQuiz()).thenReturn(new QuizResponse(id));
+        when(startQuizUseCase.startQuiz(5)).thenReturn(new QuizResponse(id));
 
         mockMvc.perform(get("/quiz/start"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.quizId").value(id));
+    }
+
+    @Test
+    void should_pass_count_param_to_use_case() throws Exception {
+        String id = UUID.randomUUID().toString();
+        when(startQuizUseCase.startQuiz(10)).thenReturn(new QuizResponse(id));
+
+        mockMvc.perform(get("/quiz/start").param("count", "10"))
+                .andExpect(status().isOk());
+
+        verify(startQuizUseCase).startQuiz(10);
+    }
+
+    @Test
+    void should_return_404_when_no_questions_available() throws Exception {
+        when(startQuizUseCase.startQuiz(5)).thenThrow(new IllegalStateException("No questions available"));
+
+        mockMvc.perform(get("/quiz/start"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("No questions available"));
+    }
+
+    @Test
+    void should_return_400_when_count_is_invalid() throws Exception {
+        when(startQuizUseCase.startQuiz(25)).thenThrow(new IllegalArgumentException("Question count must be between 1 and 20"));
+
+        mockMvc.perform(get("/quiz/start").param("count", "25"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Question count must be between 1 and 20"));
     }
 
     @Test

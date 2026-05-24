@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface QuizRepository {
 
-    Optional<Quiz> findRandomQuiz();
+    Optional<Quiz> findRandomQuiz(int count);
 }

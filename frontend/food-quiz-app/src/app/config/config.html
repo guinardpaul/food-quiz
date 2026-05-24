@@ -1,0 +1,22 @@
+<div class="container config">
+  <h1 class="config__title">Paramètres</h1>
+
+  <div class="config__field">
+    <label class="config__label" for="question-count">Nombre de questions</label>
+    <input
+      id="question-count"
+      class="config__input"
+      type="number"
+      [ngModel]="count()"
+      (ngModelChange)="count.set($event)"
+      min="1"
+      max="20"
+    />
+    @if (!isValid) {
+      <p class="config__error">Le nombre doit être compris entre 1 et 20.</p>
+    }
+  </div>
+
+  <button class="btn btn--primary" (click)="save()" [disabled]="!isValid">Sauvegarder</button>
+  <a class="config__back" routerLink="/">Retour</a>
+</div>
