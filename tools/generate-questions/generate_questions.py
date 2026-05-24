@@ -20,6 +20,8 @@ from foods import FOODS
 
 SCRIPT_DIR = Path(__file__).parent
 OUTPUT_FILE = SCRIPT_DIR / "003_questions_data.xml"
+LIQUIBASE_FILE = SCRIPT_DIR / "../../backend/food-quiz-bootstrap/src/main/resources/db/changelog/005_replace_questions.xml"
+LIQUIBASE_CHANGESET_ID = "20260524-replace-questions"
 OUTPUT_IMAGES_DIR = SCRIPT_DIR / "output_images"
 FRONTEND_ASSETS_DIR = SCRIPT_DIR / "../../frontend/food-quiz-app/public/assets/questions"
 TEMPLATE_FILE = "template.xml.j2"
@@ -156,9 +158,10 @@ def build_question(food: dict, image_url: str, carbs: int, portion_g: int | None
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate quiz questions with DALL-E 3 plate images")
+    parser = argparse.ArgumentParser(description="Generate quiz questions with gpt-image-1 plate images")
     parser.add_argument("--limit", type=int, default=None, help="Limit to N food entries (for testing/prompt tuning)")
-    parser.add_argument("--no-images", action="store_true", help="Skip DALL-E generation, set image_url to empty string (no OPENAI_API_KEY required)")
+    parser.add_argument("--no-images", action="store_true", help="Skip image generation, set image_url to empty string (no OPENAI_API_KEY required)")
+    parser.add_argument("--with-delete", action="store_true", help="Output to 005_replace_questions.xml with DELETE FROM questions (for Liquibase migration)")
     args = parser.parse_args()
 
     client = None
@@ -199,12 +202,17 @@ def main():
     print(f"\nBuilding XML for {len(questions)} questions...")
     env = Environment(loader=FileSystemLoader(str(SCRIPT_DIR)))
     template = env.get_template(TEMPLATE_FILE)
-    changeset_id = f"20260524-questions-data-{uuid.uuid4().hex[:8]}"
-    xml = template.render(questions=questions, changeset_id=changeset_id)
 
-    OUTPUT_FILE.write_text(xml, encoding="utf-8")
-    print(f"Done! Output written to: {OUTPUT_FILE}")
-    print(f"Next step: add '003_questions_data.xml' to db.changelog-master.xml")
+    if args.with_delete:
+        xml = template.render(questions=questions, changeset_id=LIQUIBASE_CHANGESET_ID, include_delete=True)
+        LIQUIBASE_FILE.write_text(xml, encoding="utf-8")
+        print(f"Done! Liquibase changeset written to: {LIQUIBASE_FILE.resolve()}")
+        print("Next step: commit the images and 005_replace_questions.xml, then merge to main")
+    else:
+        changeset_id = f"20260524-questions-data-{uuid.uuid4().hex[:8]}"
+        xml = template.render(questions=questions, changeset_id=changeset_id, include_delete=False)
+        OUTPUT_FILE.write_text(xml, encoding="utf-8")
+        print(f"Done! Output written to: {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
