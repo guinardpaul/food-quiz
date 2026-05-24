@@ -1,0 +1,36 @@
+<div class="container home">
+  <div class="home__hero">
+    <div class="home__emoji">🥗</div>
+    <h1 class="home__title">Glucides Quiz</h1>
+    <p class="home__subtitle">
+      Entraîne-toi à estimer visuellement la quantité de glucides dans ton assiette.
+    </p>
+  </div>
+
+  <div class="home__how">
+    <div class="home__step">
+      <span>📸</span>
+      <p>Regarde la photo et la portion</p>
+    </div>
+    <div class="home__step">
+      <span>🎯</span>
+      <p>Choisis la bonne quantité de glucides</p>
+    </div>
+    <div class="home__step">
+      <span>💡</span>
+      <p>Découvre le résultat et apprends à estimer</p>
+    </div>
+  </div>
+
+  <p class="home__disclaimer">
+    Les valeurs sont des estimations basées sur des portions standards.
+  </p>
+
+  @if (error()) {
+    <p class="home__error">{{ error() }}</p>
+  }
+
+  <button class="btn btn--primary" (click)="start()" [disabled]="loading()">
+    {{ loading() ? 'Chargement...' : 'Démarrer le quiz' }}
+  </button>
+</div>

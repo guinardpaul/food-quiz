@@ -1,0 +1,15 @@
+<div class="score card">
+  <div class="score__emoji">{{ emoji() }}</div>
+  <h2 class="score__title">Quiz terminé !</h2>
+
+  <div class="score__ring">
+    <span class="score__number">{{ result().score }}</span>
+    <span class="score__pct">%</span>
+  </div>
+
+  <p class="score__message">{{ message() }}</p>
+
+  <button class="btn btn--primary" (click)="restart.emit()">
+    Rejouer
+  </button>
+</div>

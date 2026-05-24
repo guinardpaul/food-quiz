@@ -1,0 +1,29 @@
+<div class="container quiz">
+  @switch (step()) {
+    @case ('loading') {
+      <div class="quiz__loading">
+        <div class="quiz__spinner"></div>
+        <p>Chargement...</p>
+      </div>
+    }
+    @case ('question') {
+      @if (currentQuestion(); as q) {
+        <app-question-card [question]="q" [index]="questionIndex()" />
+        <app-choices [choices]="q.proposedAnswers" (answered)="onAnswer($event)" />
+      }
+    }
+    @case ('feedback') {
+      @if (currentQuestion(); as q) {
+        <app-question-card [question]="q" [index]="questionIndex()" />
+      }
+      @if (feedback(); as fb) {
+        <app-feedback [feedback]="fb" (next)="onNext()" />
+      }
+    }
+    @case ('result') {
+      @if (result(); as r) {
+        <app-score [result]="r" (restart)="onRestart()" />
+      }
+    }
+  }
+</div>

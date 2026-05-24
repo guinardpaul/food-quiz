@@ -1,0 +1,56 @@
+.fb {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-left: 4px solid var(--color-border);
+  transition: border-color 0.2s;
+
+  &--correct { border-color: var(--color-success); }
+  &--wrong { border-color: var(--color-error); }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__icon { font-size: 1.4rem; }
+
+  &__verdict {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  &__answer {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    strong { font-size: 1.1rem; }
+  }
+
+  &__equivalents {
+    background: var(--color-bg);
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  &__eq-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__eq-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+  }
+
+  &__impact {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
