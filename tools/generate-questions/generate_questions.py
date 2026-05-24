@@ -13,7 +13,6 @@ import time
 import uuid
 from pathlib import Path
 
-import requests
 from jinja2 import Environment, FileSystemLoader
 from openai import OpenAI
 
@@ -110,15 +109,15 @@ def generate_plate_image(client: OpenAI, prompt: str, slug: str, portion_g: int 
     output_path = OUTPUT_IMAGES_DIR / filename
 
     if not output_path.exists():
+        import base64
         response = client.images.generate(
-            model="dall-e-3",
+            model="gpt-image-1",
             prompt=prompt,
             size="1024x1024",
-            quality="standard",
+            quality="medium",
             n=1,
         )
-        image_url = response.data[0].url
-        img_data = requests.get(image_url, timeout=30).content
+        img_data = base64.b64decode(response.data[0].b64_json)
         OUTPUT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
         output_path.write_bytes(img_data)
         print(f"    generated: {filename}")

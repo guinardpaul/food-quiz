@@ -178,32 +178,33 @@ class TestComputeEquivalents:
         assert eq["sugarCubes"] >= 1
 
 
+import base64 as _base64
+
+_FAKE_B64 = _base64.b64encode(b"fakeimage").decode()
+
+
+def _make_mock_client(api_called: list | None = None):
+    class _MockImages:
+        def generate(self, **kwargs):
+            if api_called is not None:
+                api_called.append(True)
+            class _Item:
+                b64_json = _FAKE_B64
+            class _Resp:
+                data = [_Item()]
+            return _Resp()
+    class _MockClient:
+        images = _MockImages()
+    return _MockClient()
+
+
 class TestGeneratePlateImage:
     def test_simple_image_path_includes_portion(self, tmp_path, monkeypatch):
         import generate_questions
-
         monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
         monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
 
-        class _MockImages:
-            def generate(self, **kwargs):
-                class _Resp:
-                    class _Item:
-                        url = "http://fake/img.png"
-                    data = [_Item()]
-                return _Resp()
-
-        class _MockClient:
-            images = _MockImages()
-
-        def _mock_requests_get(url, timeout):
-            class _R:
-                content = b"fakeimage"
-            return _R()
-
-        monkeypatch.setattr(generate_questions.requests, "get", _mock_requests_get)
-
-        result = generate_plate_image(_MockClient(), "test prompt", "riz-blanc-cuit", 180)
+        result = generate_plate_image(_make_mock_client(), "test prompt", "riz-blanc-cuit", 180)
 
         assert result == "/assets/questions/riz-blanc-cuit_180g.jpg"
         assert (tmp_path / "output" / "riz-blanc-cuit_180g.jpg").exists()
@@ -211,35 +212,15 @@ class TestGeneratePlateImage:
 
     def test_complex_image_path_has_no_portion_suffix(self, tmp_path, monkeypatch):
         import generate_questions
-
         monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
         monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
 
-        class _MockImages:
-            def generate(self, **kwargs):
-                class _Resp:
-                    class _Item:
-                        url = "http://fake/img.png"
-                    data = [_Item()]
-                return _Resp()
-
-        class _MockClient:
-            images = _MockImages()
-
-        def _mock_requests_get(url, timeout):
-            class _R:
-                content = b"fakeimage"
-            return _R()
-
-        monkeypatch.setattr(generate_questions.requests, "get", _mock_requests_get)
-
-        result = generate_plate_image(_MockClient(), "test prompt", "assiette-riz-poulet")
+        result = generate_plate_image(_make_mock_client(), "test prompt", "assiette-riz-poulet")
 
         assert result == "/assets/questions/assiette-riz-poulet.jpg"
 
     def test_cached_image_is_not_regenerated(self, tmp_path, monkeypatch):
         import generate_questions
-
         output_dir = tmp_path / "output"
         output_dir.mkdir()
         frontend_dir = tmp_path / "frontend"
@@ -247,30 +228,9 @@ class TestGeneratePlateImage:
         monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", output_dir)
         monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", frontend_dir)
 
-        # Pre-create the cached image
         (output_dir / "riz-blanc-cuit_180g.jpg").write_bytes(b"cached")
 
         api_called = []
-
-        class _MockImages:
-            def generate(self, **kwargs):
-                api_called.append(True)
-                class _Resp:
-                    class _Item:
-                        url = "http://fake/img.png"
-                    data = [_Item()]
-                return _Resp()
-
-        class _MockClient:
-            images = _MockImages()
-
-        def _mock_requests_get(url, timeout):
-            class _R:
-                content = b"newimage"
-            return _R()
-
-        monkeypatch.setattr(generate_questions.requests, "get", _mock_requests_get)
-
-        generate_plate_image(_MockClient(), "test prompt", "riz-blanc-cuit", 180)
+        generate_plate_image(_make_mock_client(api_called), "test prompt", "riz-blanc-cuit", 180)
 
         assert not api_called, "API should not be called when image is already cached"
