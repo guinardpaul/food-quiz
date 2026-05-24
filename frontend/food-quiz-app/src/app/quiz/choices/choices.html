@@ -1,0 +1,12 @@
+<div class="choices">
+  @for (choice of choices(); track choice) {
+    <button
+      class="choices__btn"
+      [class.choices__btn--selected]="selected() === choice"
+      [disabled]="!!selected()"
+      (click)="select(choice)"
+    >
+      {{ choice }}
+    </button>
+  }
+</div>

@@ -1,0 +1,28 @@
+<div class="fb card" [class.fb--correct]="feedback().correct" [class.fb--wrong]="!feedback().correct">
+  <div class="fb__header">
+    <span class="fb__icon">{{ feedback().correct ? '✅' : '❌' }}</span>
+    <p class="fb__verdict">
+      {{ feedback().correct ? 'Bonne réponse !' : 'Pas tout à fait...' }}
+    </p>
+  </div>
+
+  <p class="fb__answer">
+    Cette portion contient environ <strong>{{ feedback().correctAnswer }}</strong> de glucides.
+  </p>
+
+  @if (feedback().equivalents) {
+    <div class="fb__equivalents">
+      <p class="fb__eq-title">💡 Équivalents</p>
+      <div class="fb__eq-row">
+        <span>🍞 ≈ {{ feedback().equivalents.breadSlices }} tranche(s) de pain</span>
+        <span>🍬 ≈ {{ feedback().equivalents.sugarCubes }} morceau(x) de sucre</span>
+      </div>
+    </div>
+  }
+
+  <p class="fb__impact">{{ impactLabel }}</p>
+
+  <button class="btn btn--primary" (click)="next.emit()">
+    {{ feedback().hasNextQuestion ? 'Question suivante →' : 'Voir mon score' }}
+  </button>
+</div>
