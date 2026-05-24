@@ -38,3 +38,7 @@ jobs:
       - name: Test
         run: npm test -- --watch=false
         working-directory: frontend/food-quiz-app
+
+      - name: Lint
+        run: npm run lint
+        working-directory: frontend/food-quiz-app

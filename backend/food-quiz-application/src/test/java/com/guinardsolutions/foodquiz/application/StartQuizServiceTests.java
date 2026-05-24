@@ -38,21 +38,35 @@ public class StartQuizServiceTests {
     }
 
     @Test
-    void should_throw_exception_when_no_quiz_found_in_repository() {
-        when(quizRepository.findRandomQuiz()).thenReturn(Optional.empty());
+    void should_throw_when_count_is_zero() {
+        assertThatThrownBy(() -> service.startQuiz(0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("between 1 and 20");
+    }
 
-        assertThatThrownBy(service::startQuiz)
+    @Test
+    void should_throw_when_count_exceeds_max() {
+        assertThatThrownBy(() -> service.startQuiz(21))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("between 1 and 20");
+    }
+
+    @Test
+    void should_throw_when_no_questions_available() {
+        when(quizRepository.findRandomQuiz(5)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.startQuiz(5))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("No quiz found");
+                .hasMessage("No questions available");
     }
 
     @Test
     void should_return_quizId_when_quiz_is_found() {
         Quiz quiz = new Quiz(UUID.randomUUID().toString(),
                 List.of(new ChoiceQuestion("Q1", List.of("20g", "40g"), "40g")));
-        when(quizRepository.findRandomQuiz()).thenReturn(Optional.of(quiz));
+        when(quizRepository.findRandomQuiz(5)).thenReturn(Optional.of(quiz));
 
-        QuizResponse response = service.startQuiz();
+        QuizResponse response = service.startQuiz(5);
 
         assertThat(response.quizId()).isEqualTo(quiz.getQuizId().toString());
     }
@@ -61,9 +75,9 @@ public class StartQuizServiceTests {
     void should_save_quiz_in_session_when_started() {
         Quiz quiz = new Quiz(UUID.randomUUID().toString(),
                 List.of(new ChoiceQuestion("Q1", List.of("20g", "40g"), "40g")));
-        when(quizRepository.findRandomQuiz()).thenReturn(Optional.of(quiz));
+        when(quizRepository.findRandomQuiz(5)).thenReturn(Optional.of(quiz));
 
-        service.startQuiz();
+        service.startQuiz(5);
 
         verify(sessionRepository).save(any(Quiz.class));
     }

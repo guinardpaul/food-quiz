@@ -15,7 +15,6 @@ from jinja2 import Environment, FileSystemLoader
 
 from foods import FOODS
 
-QUIZ_ID = "11111111-1111-1111-1111-111111111111"
 OFF_SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
 OFF_USER_AGENT = "FoodQuiz/1.0 (guinardpaul@gmail.com)"
 OUTPUT_FILE = Path(__file__).parent / "003_questions_data.xml"
@@ -102,7 +101,6 @@ def build_question(food: dict, food_data: dict) -> dict:
         "correct_answer": f"{carbs}g",
         "equivalents": json.dumps(compute_equivalents(carbs)),
         "glycemic_impact": determine_glycemic_impact(carbs),
-        "quiz_id": QUIZ_ID,
         "question_type": "CHOICE",
     }
 

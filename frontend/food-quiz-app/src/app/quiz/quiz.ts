@@ -1,4 +1,4 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuizService } from '../core/quiz';
 import { FeedbackDto, QuestionDto, QuizResultDto } from '../core/models';
@@ -24,7 +24,8 @@ export class Quiz implements OnInit {
   protected result = signal<QuizResultDto | null>(null);
   protected questionIndex = signal(0);
 
-  constructor(private quizService: QuizService, private router: Router) {}
+  private quizService = inject(QuizService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadQuestion();

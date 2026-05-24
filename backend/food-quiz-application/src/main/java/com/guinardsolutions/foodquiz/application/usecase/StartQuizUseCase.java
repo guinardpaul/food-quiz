@@ -4,6 +4,6 @@ import com.guinardsolutions.foodquiz.application.port.in.QuizResponse;
 
 public interface StartQuizUseCase {
 
-    QuizResponse startQuiz();
+    QuizResponse startQuiz(int questionCount);
 
 }

@@ -12,6 +12,8 @@ import java.util.Optional;
 @Service
 public class StartQuizService implements StartQuizUseCase {
 
+    private static final int MAX_QUESTIONS = 20;
+
     private final QuizRepository quizRepository;
     private final QuizSessionRepository sessionRepository;
     private final QuizResponseMapper quizResponseMapper;
@@ -23,10 +25,14 @@ public class StartQuizService implements StartQuizUseCase {
     }
 
     @Override
-    public QuizResponse startQuiz() {
-        Optional<Quiz> quiz = this.quizRepository.findRandomQuiz();
+    public QuizResponse startQuiz(int questionCount) {
+        if (questionCount < 1 || questionCount > MAX_QUESTIONS) {
+            throw new IllegalArgumentException("Question count must be between 1 and " + MAX_QUESTIONS);
+        }
+
+        Optional<Quiz> quiz = this.quizRepository.findRandomQuiz(questionCount);
         if (quiz.isEmpty()) {
-            throw new IllegalStateException("No quiz found");
+            throw new IllegalStateException("No questions available");
         }
 
         Quiz foundQuiz = quiz.get();
