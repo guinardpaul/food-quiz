@@ -2,14 +2,23 @@
 
 ## Project Overview
 
-Food Quiz is a Spring Boot REST server for a quiz game focused on learning Functional Insulin Therapy (food weight and glucid quantity estimation). The backend exposes a JSON API consumed by a frontend client.
+Food Quiz is a full-stack quiz app for learning Functional Insulin Therapy (food weight and glucid quantity estimation). The backend is a Spring Boot REST API consumed by an Angular frontend.
 
+### Backend
 - **Language**: Java 21
 - **Framework**: Spring Boot 4.0.6
 - **Build**: Apache Maven 3.8+ (multi-module)
 - **Database**: PostgreSQL (production), H2 (tests)
 - **Schema migrations**: Liquibase
 - **Base package**: `com.guinardsolutions.foodquiz`
+- **Deployment**: Render
+
+### Frontend
+- **Framework**: Angular 21
+- **Language**: TypeScript 5.9
+- **Test runner**: Vitest
+- **Package manager**: npm 11
+- **Deployment**: Vercel
 
 ## Repository Structure
 
@@ -113,7 +122,7 @@ Follow this pattern for each new use case (example: `SubmitAnswer`):
 
 ## Development Workflow
 
-### Build & Test
+### Backend — Build & Test
 
 All Maven commands must be run from the `backend/` directory.
 
@@ -134,7 +143,7 @@ cd backend && mvn -pl food-quiz-domain test
 cd backend && mvn clean install -DskipTests
 ```
 
-### Running Locally
+### Backend — Running Locally
 
 Requires a PostgreSQL instance running on `localhost:5432` with database `postgres`, user `postgres`, password `password` (see `backend/food-quiz-bootstrap/src/main/resources/application.yaml`).
 
@@ -143,10 +152,25 @@ cd backend/food-quiz-bootstrap
 mvn spring-boot:run
 ```
 
-The server starts on **port 8080**. Available endpoints:
-- `GET /quiz/start` — returns a random quiz as JSON
+The server starts on **port 8080**. Available endpoints (visual quiz flow):
+- `GET /quiz/start` — starts a new quiz session, returns `{ quizId }`
+- `GET /quiz/{quizId}/question` — returns the current question
+- `POST /quiz/{quizId}/answer` — submits an answer, returns feedback + equivalents + glycemic impact
+- `GET /quiz/{quizId}/result` — returns final score once all questions are answered
 - `GET /actuator/health` — health check
 - `GET /actuator/liquibase` — migration status
+
+### Frontend — Running Locally
+
+```bash
+cd frontend/food-quiz-app
+npm install        # first time only
+npm start          # ng serve, runs on http://localhost:4200
+npm test           # Vitest unit tests (watch mode)
+npm run build      # production build (sets env vars then ng build)
+```
+
+The frontend reads `environment.apiUrl` (defaults to `http://localhost:8080` in dev) to reach the backend.
 
 ### Code Coverage Report
 
@@ -156,6 +180,57 @@ backend/food-quiz-tests-report/target/site/jacoco-aggregate/index.html
 ```
 
 CI fails if overall coverage or per-file coverage for changed files drops below **80%**.
+
+## Frontend Structure
+
+The Angular app lives in `frontend/food-quiz-app/src/app/`:
+
+```
+src/app/
+├── core/
+│   ├── models.ts      # TypeScript interfaces mirroring backend DTOs
+│   └── quiz.ts        # QuizService — HttpClient calls to /quiz/* endpoints
+├── home/              # Home screen with "Start Quiz" button
+└── quiz/
+    ├── quiz.ts        # Orchestrates the full quiz flow (loading → question → feedback → result)
+    ├── question-card/ # Displays food image, label, portion description
+    ├── choices/       # Renders proposed answer buttons
+    ├── feedback/      # Correct/wrong overlay with equivalents and glycemic impact
+    └── score/         # Final score screen
+```
+
+`environment.ts` / `environment.prod.ts` hold `apiUrl`. The production value is injected at build time via `scripts/set-env.js` reading environment variables (used by Vercel).
+
+### Frontend Conventions
+- Standalone components (no `NgModule`).
+- Signals for local state (`signal()`, `input()`).
+- `QuizService` is the single HTTP boundary — components never call `HttpClient` directly.
+- TypeScript interfaces in `models.ts` mirror backend API DTOs exactly; keep them in sync when the API changes.
+
+## Tools — Question Generator
+
+`tools/generate-questions/` is a standalone Python 3.12 script that populates the question bank.
+
+```
+tools/generate-questions/
+├── generate_questions.py  # Main script: fetches Open Food Facts → outputs Liquibase XML
+├── foods.py               # Curated list of foods with standard portions (grams)
+├── template.xml.j2        # Jinja2 template for a Liquibase changeset
+├── 003_questions_data.xml # Generated output (committed after review)
+├── requirements.txt       # requests, jinja2, pytest
+└── tests/                 # pytest unit tests (no network calls)
+```
+
+**How to run:**
+```bash
+cd tools/generate-questions
+pip install -r requirements.txt
+python generate_questions.py   # fetches Open Food Facts, writes 003_questions_data.xml
+```
+
+After generation, register the output file in `backend/food-quiz-bootstrap/src/main/resources/db/changelog/db.changelog-master.xml`.
+
+**Adding new foods:** edit `foods.py` — each entry needs `name`, `query` (Open Food Facts search term), and `portion_g`.
 
 ## Database Management
 
@@ -175,13 +250,15 @@ Test classes use `@ActiveProfiles("test")`.
 
 ## CI/CD
 
-GitHub Actions workflow: `.github/workflows/ci.yml`
+All workflows trigger on push to `main` and pull requests targeting `main`, path-filtered per sub-project.
 
-- Triggers on push to `main` and pull requests targeting `main`
-- JDK: Temurin 25
-- Step: `mvn -B clean verify` run from `working-directory: backend` (includes unit tests, integration tests, architecture tests, JaCoCo)
-- Coverage gate: 80% overall and 80% on changed files (posted as a PR comment via `jacoco-report` action)
-- Additional workflows: dependency review (security), auto-assign, PR labeler, Dependabot
+| Workflow | Path filter | What it does |
+|---|---|---|
+| `ci.yml` | `backend/**` | JDK Temurin 25, `mvn -B clean verify` (unit + integration + architecture tests + JaCoCo). Coverage gate: 80% overall and per changed file (PR comment via `jacoco-report`). |
+| `frontend-ci.yml` | `frontend/**` | Node 20, `npm ci`, `npm run build`, `npm test -- --watch=false` (Vitest). |
+| `tools-ci.yml` | `tools/**` | Python 3.12, `pip install -r requirements.txt`, `python -m pytest tests/ -v`. |
+| `dependency-review.yml` | — | Security review on PRs. |
+| `auto-assign.yml` / `pr-labeler.yml` | — | PR automation. |
 
 ## JPA Entity Inheritance
 
