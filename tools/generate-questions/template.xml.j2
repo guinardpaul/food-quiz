@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="{{ changeset_id }}" author="guinardpaul">
+{% for q in questions %}
+        <insert tableName="questions">
+            <column name="question_type"       value="{{ q.question_type }}"/>
+            <column name="quiz_id"             value="{{ q.quiz_id }}"/>
+            <column name="label"               value="{{ q.label }}"/>
+            <column name="food_name"           value="{{ q.food_name }}"/>
+            <column name="portion_description" value="{{ q.portion_description }}"/>
+            <column name="image_url"           value="{{ q.image_url }}"/>
+            <column name="proposed_answer"     value='{{ q.proposed_answers }}'/>
+            <column name="correct_answer"      value="{{ q.correct_answer }}"/>
+            <column name="equivalents"         value='{{ q.equivalents }}'/>
+            <column name="glycemic_impact"     value="{{ q.glycemic_impact }}"/>
+        </insert>
+{% endfor %}
+    </changeSet>
+
+</databaseChangeLog>
