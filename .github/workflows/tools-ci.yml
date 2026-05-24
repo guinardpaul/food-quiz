@@ -1,0 +1,34 @@
+name: Tools CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tools/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'tools/**'
+
+jobs:
+  test-generate-questions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        working-directory: tools/generate-questions
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
+        working-directory: tools/generate-questions
