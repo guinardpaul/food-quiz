@@ -1,0 +1,26 @@
+<div class="qcard card">
+  <div class="qcard__image-wrap">
+    @if (!imageLoaded() && !imageError()) {
+      <div class="qcard__skeleton"></div>
+    }
+    @if (!imageError()) {
+      <img
+        class="qcard__image"
+        [class.qcard__image--visible]="imageLoaded()"
+        [src]="question().imageUrl"
+        [alt]="question().foodName"
+        (load)="imageLoaded.set(true)"
+        (error)="imageError.set(true)"
+      />
+    } @else {
+      <div class="qcard__no-image">🍽️</div>
+    }
+  </div>
+
+  <div class="qcard__info">
+    <h2 class="qcard__name">{{ question().foodName }}</h2>
+    <p class="qcard__portion">{{ question().portionDescription }}</p>
+  </div>
+
+  <p class="qcard__label">{{ question().label }}</p>
+</div>
