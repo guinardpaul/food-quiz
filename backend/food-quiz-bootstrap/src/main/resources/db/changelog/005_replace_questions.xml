@@ -11,7 +11,7 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Riz blanc cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
+            <column name="image_url"           value="/assets/questions/riz-blanc-cuit_180g.jpg"/>
             <column name="proposed_answer"     value='["20g", "30g", "70g", "50g"]'/>
             <column name="correct_answer"      value="50g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
@@ -23,7 +23,7 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pâtes cuites"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
+            <column name="image_url"           value="/assets/questions/pates-cuites_200g.jpg"/>
             <column name="proposed_answer"     value='["70g", "50g", "30g", "85g"]'/>
             <column name="correct_answer"      value="50g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
@@ -35,7 +35,7 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Semoule cuite"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
+            <column name="image_url"           value="/assets/questions/semoule-cuite_180g.jpg"/>
             <column name="proposed_answer"     value='["38g", "65g", "25g", "15g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
@@ -47,7 +47,7 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Quinoa cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
+            <column name="image_url"           value="/assets/questions/quinoa-cuit_180g.jpg"/>
             <column name="proposed_answer"     value='["38g", "15g", "25g", "65g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
@@ -59,7 +59,7 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Boulgour cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
+            <column name="image_url"           value="/assets/questions/boulgour-cuit_180g.jpg"/>
             <column name="proposed_answer"     value='["55g", "70g", "41g", "25g"]'/>
             <column name="correct_answer"      value="41g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
