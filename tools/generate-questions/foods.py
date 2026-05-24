@@ -412,6 +412,108 @@ FOODS = [
     },
     # --- Plats composés ---
     {
+        "name": "Couscous poulet légumes",
+        "slug": "couscous-poulet-legumes",
+        "components": [
+            {"name_en": "cooked couscous",             "portion_g": 150, "carbs_per_100g": 21.0},
+            {"name_en": "grilled chicken",             "portion_g": 100, "carbs_per_100g": 0.0},
+            {"name_en": "cooked zucchini and carrots", "portion_g": 80,  "carbs_per_100g": 4.0},
+        ],
+    },
+    {
+        "name": "Steak frites haricots verts",
+        "slug": "steak-frites-haricots-verts",
+        "components": [
+            {"name_en": "french fries",       "portion_g": 150, "carbs_per_100g": 37.0},
+            {"name_en": "grilled beef steak", "portion_g": 120, "carbs_per_100g": 0.0},
+            {"name_en": "cooked green beans", "portion_g": 80,  "carbs_per_100g": 3.6},
+        ],
+    },
+    {
+        "name": "Soupe lentilles et pain",
+        "slug": "soupe-lentilles-pain",
+        "components": [
+            {"name_en": "lentil soup",  "portion_g": 300, "carbs_per_100g": 10.0},
+            {"name_en": "bread slice",  "portion_g": 40,  "carbs_per_100g": 57.0},
+        ],
+    },
+    {
+        "name": "Wrap poulet crudités",
+        "slug": "wrap-poulet-crudites",
+        "components": [
+            {"name_en": "wheat flour wrap tortilla",     "portion_g": 60, "carbs_per_100g": 52.0},
+            {"name_en": "grilled chicken strips",        "portion_g": 80, "carbs_per_100g": 0.0},
+            {"name_en": "fresh salad and raw vegetables","portion_g": 50, "carbs_per_100g": 3.0},
+        ],
+    },
+    {
+        "name": "Pâtes au pesto",
+        "slug": "pates-au-pesto",
+        "components": [
+            {"name_en": "cooked pasta", "portion_g": 220, "carbs_per_100g": 25.0},
+            {"name_en": "pesto sauce",  "portion_g": 30,  "carbs_per_100g": 5.0},
+        ],
+    },
+    {
+        "name": "Riz haricots rouges",
+        "slug": "riz-haricots-rouges",
+        "components": [
+            {"name_en": "cooked white rice",       "portion_g": 150, "carbs_per_100g": 27.9},
+            {"name_en": "cooked red kidney beans", "portion_g": 120, "carbs_per_100g": 15.6},
+        ],
+    },
+    {
+        "name": "Buddha bowl quinoa légumes rôtis",
+        "slug": "buddha-bowl-quinoa",
+        "components": [
+            {"name_en": "cooked quinoa",              "portion_g": 150, "carbs_per_100g": 21.3},
+            {"name_en": "roasted sweet potato cubes", "portion_g": 100, "carbs_per_100g": 20.1},
+            {"name_en": "fresh spinach and tomatoes", "portion_g": 60,  "carbs_per_100g": 3.5},
+        ],
+    },
+    {
+        "name": "Curry de pois chiches et riz",
+        "slug": "curry-pois-chiches-riz",
+        "components": [
+            {"name_en": "cooked white rice",    "portion_g": 150, "carbs_per_100g": 27.9},
+            {"name_en": "chickpea curry sauce", "portion_g": 150, "carbs_per_100g": 14.0},
+        ],
+    },
+    {
+        "name": "Saumon pommes de terre",
+        "slug": "saumon-pommes-de-terre",
+        "components": [
+            {"name_en": "steamed potatoes",    "portion_g": 200, "carbs_per_100g": 16.6},
+            {"name_en": "baked salmon fillet", "portion_g": 120, "carbs_per_100g": 0.0},
+        ],
+    },
+    {
+        "name": "Tartines avocat œufs",
+        "slug": "tartines-avocat-oeufs",
+        "components": [
+            {"name_en": "toasted bread slices", "portion_g": 80,  "carbs_per_100g": 49.0},
+            {"name_en": "mashed avocado",        "portion_g": 60,  "carbs_per_100g": 1.8},
+            {"name_en": "poached eggs",          "portion_g": 100, "carbs_per_100g": 0.4},
+        ],
+    },
+    {
+        "name": "Galette sarrasin jambon fromage",
+        "slug": "galette-sarrasin-jambon",
+        "components": [
+            {"name_en": "buckwheat galette crepe", "portion_g": 100, "carbs_per_100g": 38.0},
+            {"name_en": "ham slice",               "portion_g": 40,  "carbs_per_100g": 0.5},
+            {"name_en": "melted cheese",           "portion_g": 30,  "carbs_per_100g": 0.5},
+        ],
+    },
+    {
+        "name": "Riz sauté aux légumes",
+        "slug": "riz-saute-legumes",
+        "components": [
+            {"name_en": "stir-fried rice",          "portion_g": 200, "carbs_per_100g": 27.9},
+            {"name_en": "mixed sautéed vegetables", "portion_g": 100, "carbs_per_100g": 5.0},
+        ],
+    },
+    {
         "name": "Assiette riz et poulet grillé",
         "slug": "assiette-riz-poulet-grille",
         "components": [

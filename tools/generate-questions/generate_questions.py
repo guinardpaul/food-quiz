@@ -82,14 +82,26 @@ def is_simple(food: dict) -> bool:
 def build_prompt(food: dict, portion_g: int | None = None) -> str:
     components = food["components"]
     if portion_g is not None:
-        parts = [f"{portion_g}g of {components[0]['name_en']}"]
+        subject = components[0]["name_en"]
+        return (
+            f"Realistic overhead food photography of {subject} on a white ceramic plate, "
+            "generous serving, natural soft lighting, light neutral background, "
+            "high detail, appetizing, no text, no labels, no logo"
+        )
     else:
-        parts = [f"{c['portion_g']}g of {c['name_en']}" for c in components]
-    ingredients = " and ".join(parts)
-    return (
-        f"Realistic overhead food photography, white ceramic plate with {ingredients}, "
-        "natural lighting, neutral light background, high detail, appetizing, no text, no labels"
-    )
+        names = [c["name_en"] for c in components]
+        if len(names) == 1:
+            subject = names[0]
+        elif len(names) == 2:
+            subject = f"{names[0]} with {names[1]}"
+        else:
+            subject = f"{names[0]} with {names[1]} and {names[2]}"
+        return (
+            f"Realistic overhead food photography of a complete meal plate: {subject}, "
+            "served on a white ceramic plate, restaurant quality plating, "
+            "natural soft lighting, light neutral background, high detail, appetizing, "
+            "no text, no labels, no logo"
+        )
 
 
 def generate_plate_image(client: OpenAI, prompt: str, slug: str, portion_g: int | None = None) -> str:
@@ -147,16 +159,19 @@ def build_question(food: dict, image_url: str, carbs: int, portion_g: int | None
 def main():
     parser = argparse.ArgumentParser(description="Generate quiz questions with DALL-E 3 plate images")
     parser.add_argument("--limit", type=int, default=None, help="Limit to N food entries (for testing/prompt tuning)")
+    parser.add_argument("--no-images", action="store_true", help="Skip DALL-E generation, set image_url to empty string (no OPENAI_API_KEY required)")
     args = parser.parse_args()
 
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        raise SystemExit("ERROR: OPENAI_API_KEY environment variable not set")
+    client = None
+    if not args.no_images:
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            raise SystemExit("ERROR: OPENAI_API_KEY environment variable not set")
+        client = OpenAI(api_key=api_key)
 
-    client = OpenAI(api_key=api_key)
     foods = FOODS[: args.limit] if args.limit is not None else FOODS
 
-    print(f"Generating images for {len(foods)} food entries...")
+    print(f"{'Generating questions (no images)' if args.no_images else 'Generating images'} for {len(foods)} food entries...")
     questions = []
 
     for food in foods:
@@ -165,16 +180,22 @@ def main():
                 print(f"  {food['name']} ({portion_g}g)...")
                 prompt = build_prompt(food, portion_g)
                 carbs = compute_total_carbs(food["components"], portion_g)
-                image_url = generate_plate_image(client, prompt, food["slug"], portion_g)
+                if args.no_images:
+                    image_url = ""
+                else:
+                    image_url = generate_plate_image(client, prompt, food["slug"], portion_g)
+                    time.sleep(0.5)
                 questions.append(build_question(food, image_url, carbs, portion_g))
-                time.sleep(0.5)
         else:
             print(f"  {food['name']} (plat composé)...")
             prompt = build_prompt(food)
             carbs = compute_total_carbs(food["components"])
-            image_url = generate_plate_image(client, prompt, food["slug"])
+            if args.no_images:
+                image_url = ""
+            else:
+                image_url = generate_plate_image(client, prompt, food["slug"])
+                time.sleep(0.5)
             questions.append(build_question(food, image_url, carbs))
-            time.sleep(0.5)
 
     print(f"\nBuilding XML for {len(questions)} questions...")
     env = Environment(loader=FileSystemLoader(str(SCRIPT_DIR)))

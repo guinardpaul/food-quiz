@@ -32,6 +32,16 @@ COMPLEX_FOOD = {
     ],
 }
 
+THREE_COMPONENT_FOOD = {
+    "name": "Assiette riz lentilles carottes",
+    "slug": "assiette-riz-lentilles-carottes",
+    "components": [
+        {"name_en": "cooked white rice", "portion_g": 120, "carbs_per_100g": 27.9},
+        {"name_en": "cooked green lentils", "portion_g": 100, "carbs_per_100g": 16.8},
+        {"name_en": "cooked carrots", "portion_g": 80, "carbs_per_100g": 6.5},
+    ],
+}
+
 
 class TestComputeCarbs:
     def test_standard_portion(self):
@@ -73,30 +83,49 @@ class TestIsSimple:
 
 
 class TestBuildPrompt:
-    def test_simple_food_includes_portion_and_ingredient(self):
+    def test_simple_food_includes_ingredient(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
-        assert "180g of cooked white rice" in prompt
+        assert "cooked white rice" in prompt
+
+    def test_simple_food_includes_generous_serving(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "generous serving" in prompt
 
     def test_simple_food_includes_photography_keywords(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
         assert "overhead food photography" in prompt.lower()
         assert "no text" in prompt.lower()
 
+    def test_simple_food_does_not_include_grams_in_prompt(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "180g" not in prompt
+
     def test_complex_dish_includes_all_components(self):
         prompt = build_prompt(COMPLEX_FOOD)
-        assert "150g of cooked white rice" in prompt
-        assert "120g of grilled chicken breast" in prompt
+        assert "cooked white rice" in prompt
+        assert "grilled chicken breast" in prompt
 
-    def test_complex_dish_uses_and_separator(self):
+    def test_complex_dish_includes_complete_meal_plate(self):
         prompt = build_prompt(COMPLEX_FOOD)
+        assert "complete meal plate" in prompt
+
+    def test_three_component_dish_uses_and_separator(self):
+        prompt = build_prompt(THREE_COMPONENT_FOOD)
         assert " and " in prompt
 
-    def test_simple_with_different_portions_produces_different_prompts(self):
+    def test_two_component_dish_uses_with_separator(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert " with " in prompt
+
+    def test_complex_dish_does_not_include_grams_in_prompt(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert "150g" not in prompt
+        assert "120g" not in prompt
+
+    def test_simple_food_same_prompt_for_different_portions_of_same_ingredient(self):
         prompt_100 = build_prompt(SIMPLE_FOOD, 100)
         prompt_200 = build_prompt(SIMPLE_FOOD, 200)
-        assert "100g" in prompt_100
-        assert "200g" in prompt_200
-        assert prompt_100 != prompt_200
+        assert prompt_100 == prompt_200
 
 
 class TestDetermineGlycemicImpact:
