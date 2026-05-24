@@ -17,6 +17,7 @@ from foods import FOODS
 
 QUIZ_ID = "11111111-1111-1111-1111-111111111111"
 OFF_SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
+OFF_USER_AGENT = "FoodQuiz/1.0 (guinardpaul@gmail.com)"
 OUTPUT_FILE = Path(__file__).parent / "003_questions_data.xml"
 TEMPLATE_FILE = "template.xml.j2"
 
@@ -73,7 +74,7 @@ def fetch_food_data(query: str) -> dict | None:
         "fields": "product_name,image_front_url,nutriments",
     }
     try:
-        resp = requests.get(OFF_SEARCH_URL, params=params, timeout=10)
+        resp = requests.get(OFF_SEARCH_URL, params=params, timeout=10, headers={"User-Agent": OFF_USER_AGENT})
         resp.raise_for_status()
         data = resp.json()
         products = data.get("products", [])
