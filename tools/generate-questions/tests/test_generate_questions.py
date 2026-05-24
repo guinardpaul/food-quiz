@@ -4,11 +4,43 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from generate_questions import (
+    build_prompt,
     compute_carbs_grams,
     compute_equivalents,
+    compute_total_carbs,
     determine_glycemic_impact,
     generate_distractors,
+    generate_plate_image,
+    is_simple,
 )
+
+SIMPLE_FOOD = {
+    "name": "Riz blanc cuit",
+    "slug": "riz-blanc-cuit",
+    "portions_g": [180],
+    "components": [
+        {"name_en": "cooked white rice", "carbs_per_100g": 27.9},
+    ],
+}
+
+COMPLEX_FOOD = {
+    "name": "Assiette riz et poulet grillé",
+    "slug": "assiette-riz-poulet-grille",
+    "components": [
+        {"name_en": "cooked white rice", "portion_g": 150, "carbs_per_100g": 27.9},
+        {"name_en": "grilled chicken breast", "portion_g": 120, "carbs_per_100g": 0.0},
+    ],
+}
+
+THREE_COMPONENT_FOOD = {
+    "name": "Assiette riz lentilles carottes",
+    "slug": "assiette-riz-lentilles-carottes",
+    "components": [
+        {"name_en": "cooked white rice", "portion_g": 120, "carbs_per_100g": 27.9},
+        {"name_en": "cooked green lentils", "portion_g": 100, "carbs_per_100g": 16.8},
+        {"name_en": "cooked carrots", "portion_g": 80, "carbs_per_100g": 6.5},
+    ],
+}
 
 
 class TestComputeCarbs:
@@ -21,6 +53,79 @@ class TestComputeCarbs:
     def test_rounding(self):
         # 33.3 * 150 / 100 = 49.95 -> rounds to 50
         assert compute_carbs_grams(33.3, 150) == 50
+
+
+class TestComputeTotalCarbs:
+    def test_simple_food(self):
+        # 27.9 * 180 / 100 = 50.22 → 50
+        assert compute_total_carbs(SIMPLE_FOOD["components"], 180) == 50
+
+    def test_complex_dish_sums_components(self):
+        # rice: 27.9 * 150 / 100 = 41.85, chicken: 0 → total = 42
+        assert compute_total_carbs(COMPLEX_FOOD["components"]) == 42
+
+    def test_complex_dish_with_multiple_carb_components(self):
+        components = [
+            {"name_en": "cooked white rice", "portion_g": 120, "carbs_per_100g": 27.9},
+            {"name_en": "cooked green lentils", "portion_g": 100, "carbs_per_100g": 16.8},
+            {"name_en": "cooked carrots", "portion_g": 80, "carbs_per_100g": 6.5},
+        ]
+        # rice: 33.48, lentils: 16.8, carrots: 5.2 → total 55.48 → 55
+        assert compute_total_carbs(components) == 55
+
+
+class TestIsSimple:
+    def test_simple_food_has_portions_g(self):
+        assert is_simple(SIMPLE_FOOD) is True
+
+    def test_complex_dish_has_no_portions_g(self):
+        assert is_simple(COMPLEX_FOOD) is False
+
+
+class TestBuildPrompt:
+    def test_simple_food_includes_ingredient(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "cooked white rice" in prompt
+
+    def test_simple_food_includes_generous_serving(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "generous serving" in prompt
+
+    def test_simple_food_includes_photography_keywords(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "overhead food photography" in prompt.lower()
+        assert "no text" in prompt.lower()
+
+    def test_simple_food_does_not_include_grams_in_prompt(self):
+        prompt = build_prompt(SIMPLE_FOOD, 180)
+        assert "180g" not in prompt
+
+    def test_complex_dish_includes_all_components(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert "cooked white rice" in prompt
+        assert "grilled chicken breast" in prompt
+
+    def test_complex_dish_includes_complete_meal_plate(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert "complete meal plate" in prompt
+
+    def test_three_component_dish_uses_and_separator(self):
+        prompt = build_prompt(THREE_COMPONENT_FOOD)
+        assert " and " in prompt
+
+    def test_two_component_dish_uses_with_separator(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert " with " in prompt
+
+    def test_complex_dish_does_not_include_grams_in_prompt(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert "150g" not in prompt
+        assert "120g" not in prompt
+
+    def test_simple_food_same_prompt_for_different_portions_of_same_ingredient(self):
+        prompt_100 = build_prompt(SIMPLE_FOOD, 100)
+        prompt_200 = build_prompt(SIMPLE_FOOD, 200)
+        assert prompt_100 == prompt_200
 
 
 class TestDetermineGlycemicImpact:
@@ -71,3 +176,61 @@ class TestComputeEquivalents:
         eq = compute_equivalents(2)
         assert eq["breadSlices"] >= 1
         assert eq["sugarCubes"] >= 1
+
+
+import base64 as _base64
+
+_FAKE_B64 = _base64.b64encode(b"fakeimage").decode()
+
+
+def _make_mock_client(api_called: list | None = None):
+    class _MockImages:
+        def generate(self, **kwargs):
+            if api_called is not None:
+                api_called.append(True)
+            class _Item:
+                b64_json = _FAKE_B64
+            class _Resp:
+                data = [_Item()]
+            return _Resp()
+    class _MockClient:
+        images = _MockImages()
+    return _MockClient()
+
+
+class TestGeneratePlateImage:
+    def test_simple_image_path_includes_portion(self, tmp_path, monkeypatch):
+        import generate_questions
+        monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
+        monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
+
+        result = generate_plate_image(_make_mock_client(), "test prompt", "riz-blanc-cuit", 180)
+
+        assert result == "/assets/questions/riz-blanc-cuit_180g.jpg"
+        assert (tmp_path / "output" / "riz-blanc-cuit_180g.jpg").exists()
+        assert (tmp_path / "frontend" / "riz-blanc-cuit_180g.jpg").exists()
+
+    def test_complex_image_path_has_no_portion_suffix(self, tmp_path, monkeypatch):
+        import generate_questions
+        monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
+        monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
+
+        result = generate_plate_image(_make_mock_client(), "test prompt", "assiette-riz-poulet")
+
+        assert result == "/assets/questions/assiette-riz-poulet.jpg"
+
+    def test_cached_image_is_not_regenerated(self, tmp_path, monkeypatch):
+        import generate_questions
+        output_dir = tmp_path / "output"
+        output_dir.mkdir()
+        frontend_dir = tmp_path / "frontend"
+        frontend_dir.mkdir()
+        monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", output_dir)
+        monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", frontend_dir)
+
+        (output_dir / "riz-blanc-cuit_180g.jpg").write_bytes(b"cached")
+
+        api_called = []
+        generate_plate_image(_make_mock_client(api_called), "test prompt", "riz-blanc-cuit", 180)
+
+        assert not api_called, "API should not be called when image is already cached"

@@ -1,23 +1,29 @@
 #!/usr/bin/env python3
 """
 Generates Liquibase XML data for visual carb quiz questions.
-Fetches food data from Open Food Facts API and outputs 003_questions_data.xml.
+Uses DALL-E 3 to generate plate images and stores them as static assets.
 """
 
+import argparse
 import json
+import os
 import random
+import shutil
 import time
 import uuid
 from pathlib import Path
 
-import requests
 from jinja2 import Environment, FileSystemLoader
+from openai import OpenAI
 
 from foods import FOODS
 
-OFF_SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
-OFF_USER_AGENT = "FoodQuiz/1.0 (guinardpaul@gmail.com)"
-OUTPUT_FILE = Path(__file__).parent / "003_questions_data.xml"
+SCRIPT_DIR = Path(__file__).parent
+OUTPUT_FILE = SCRIPT_DIR / "003_questions_data.xml"
+LIQUIBASE_FILE = SCRIPT_DIR / "../../backend/food-quiz-bootstrap/src/main/resources/db/changelog/005_replace_questions.xml"
+LIQUIBASE_CHANGESET_ID = "20260524-replace-questions"
+OUTPUT_IMAGES_DIR = SCRIPT_DIR / "output_images"
+FRONTEND_ASSETS_DIR = SCRIPT_DIR / "../../frontend/food-quiz-app/public/assets/questions"
 TEMPLATE_FILE = "template.xml.j2"
 
 BREAD_SLICE_CARBS = 15
@@ -26,6 +32,14 @@ SUGAR_CUBE_CARBS = 4
 
 def compute_carbs_grams(carbs_100g: float, portion_g: int) -> int:
     return round(carbs_100g * portion_g / 100)
+
+
+def compute_total_carbs(components: list[dict], default_portion_g: int | None = None) -> int:
+    total = 0.0
+    for c in components:
+        portion = c.get("portion_g", default_portion_g)
+        total += c["carbs_per_100g"] * portion / 100
+    return round(total)
 
 
 def generate_distractors(correct: int) -> list[int]:
@@ -38,7 +52,6 @@ def generate_distractors(correct: int) -> list[int]:
             distractors.add(candidate)
         if len(distractors) == 3:
             break
-    # fill remaining if needed with offset fallbacks
     offsets = [correct + 20, max(5, correct - 20), correct + 35]
     for off in offsets:
         if len(distractors) == 3:
@@ -63,40 +76,79 @@ def determine_glycemic_impact(carbs_grams: int) -> str:
     return "HIGH"
 
 
-def fetch_food_data(query: str) -> dict | None:
-    params = {
-        "search_terms": query,
-        "search_simple": 1,
-        "action": "process",
-        "json": 1,
-        "page_size": 5,
-        "fields": "product_name,image_front_url,nutriments",
-    }
-    try:
-        resp = requests.get(OFF_SEARCH_URL, params=params, timeout=10, headers={"User-Agent": OFF_USER_AGENT})
-        resp.raise_for_status()
-        data = resp.json()
-        products = data.get("products", [])
-        for p in products:
-            carbs = p.get("nutriments", {}).get("carbohydrates_100g")
-            image = p.get("image_front_url")
-            if carbs and image:
-                return {"carbs_100g": float(carbs), "image_url": image}
-    except Exception as e:
-        print(f"  WARNING: fetch failed for '{query}': {e}")
-    return None
+def is_simple(food: dict) -> bool:
+    return "portions_g" in food
 
 
-def build_question(food: dict, food_data: dict) -> dict:
-    carbs = compute_carbs_grams(food_data["carbs_100g"], food["portion_g"])
+def build_prompt(food: dict, portion_g: int | None = None) -> str:
+    components = food["components"]
+    if portion_g is not None:
+        subject = components[0]["name_en"]
+        return (
+            f"Realistic overhead food photography of {subject} on a white ceramic plate, "
+            "generous serving, natural soft lighting, light neutral background, "
+            "high detail, appetizing, no text, no labels, no logo"
+        )
+    else:
+        names = [c["name_en"] for c in components]
+        if len(names) == 1:
+            subject = names[0]
+        elif len(names) == 2:
+            subject = f"{names[0]} with {names[1]}"
+        else:
+            subject = f"{names[0]} with {names[1]} and {names[2]}"
+        return (
+            f"Realistic overhead food photography of a complete meal plate: {subject}, "
+            "served on a white ceramic plate, restaurant quality plating, "
+            "natural soft lighting, light neutral background, high detail, appetizing, "
+            "no text, no labels, no logo"
+        )
+
+
+def generate_plate_image(client: OpenAI, prompt: str, slug: str, portion_g: int | None = None) -> str:
+    suffix = f"_{portion_g}g" if portion_g is not None else ""
+    filename = f"{slug}{suffix}.jpg"
+    output_path = OUTPUT_IMAGES_DIR / filename
+
+    if not output_path.exists():
+        import base64
+        response = client.images.generate(
+            model="gpt-image-1",
+            prompt=prompt,
+            size="1024x1024",
+            quality="medium",
+            n=1,
+        )
+        img_data = base64.b64decode(response.data[0].b64_json)
+        OUTPUT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        output_path.write_bytes(img_data)
+        print(f"    generated: {filename}")
+    else:
+        print(f"    (cached)   {filename}")
+
+    frontend_path = FRONTEND_ASSETS_DIR / filename
+    frontend_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(output_path, frontend_path)
+
+    return f"/assets/questions/{filename}"
+
+
+def build_question(food: dict, image_url: str, carbs: int, portion_g: int | None = None) -> dict:
     distractors = generate_distractors(carbs)
     choices = [f"{v}g" for v in sorted([carbs] + distractors)]
     random.shuffle(choices)
+
+    if portion_g is not None:
+        portion_desc = f"Portion standard (~{portion_g}g)"
+    else:
+        total_g = sum(c["portion_g"] for c in food["components"])
+        portion_desc = f"Assiette complète (~{total_g}g)"
+
     return {
         "label": "Combien de glucides environ ?",
         "food_name": food["name"],
-        "portion_description": f"Portion standard (~{food['portion_g']}g)",
-        "image_url": food_data["image_url"],
+        "portion_description": portion_desc,
+        "image_url": image_url,
         "proposed_answers": json.dumps(choices),
         "correct_answer": f"{carbs}g",
         "equivalents": json.dumps(compute_equivalents(carbs)),
@@ -106,27 +158,61 @@ def build_question(food: dict, food_data: dict) -> dict:
 
 
 def main():
-    print(f"Fetching data for {len(FOODS)} foods from Open Food Facts...")
+    parser = argparse.ArgumentParser(description="Generate quiz questions with gpt-image-1 plate images")
+    parser.add_argument("--limit", type=int, default=None, help="Limit to N food entries (for testing/prompt tuning)")
+    parser.add_argument("--no-images", action="store_true", help="Skip image generation, set image_url to empty string (no OPENAI_API_KEY required)")
+    parser.add_argument("--with-delete", action="store_true", help="Output to 005_replace_questions.xml with DELETE FROM questions (for Liquibase migration)")
+    args = parser.parse_args()
+
+    client = None
+    if not args.no_images:
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            raise SystemExit("ERROR: OPENAI_API_KEY environment variable not set")
+        client = OpenAI(api_key=api_key)
+
+    foods = FOODS[: args.limit] if args.limit is not None else FOODS
+
+    print(f"{'Generating questions (no images)' if args.no_images else 'Generating images'} for {len(foods)} food entries...")
     questions = []
 
-    for food in FOODS:
-        print(f"  {food['name']}...")
-        food_data = fetch_food_data(food["query"])
-        if food_data:
-            questions.append(build_question(food, food_data))
+    for food in foods:
+        if is_simple(food):
+            for portion_g in food["portions_g"]:
+                print(f"  {food['name']} ({portion_g}g)...")
+                prompt = build_prompt(food, portion_g)
+                carbs = compute_total_carbs(food["components"], portion_g)
+                if args.no_images:
+                    image_url = ""
+                else:
+                    image_url = generate_plate_image(client, prompt, food["slug"], portion_g)
+                    time.sleep(0.5)
+                questions.append(build_question(food, image_url, carbs, portion_g))
         else:
-            print(f"  SKIPPED: no data found for {food['name']}")
-        time.sleep(0.5)  # be polite to the API
+            print(f"  {food['name']} (plat composé)...")
+            prompt = build_prompt(food)
+            carbs = compute_total_carbs(food["components"])
+            if args.no_images:
+                image_url = ""
+            else:
+                image_url = generate_plate_image(client, prompt, food["slug"])
+                time.sleep(0.5)
+            questions.append(build_question(food, image_url, carbs))
 
     print(f"\nBuilding XML for {len(questions)} questions...")
-    env = Environment(loader=FileSystemLoader(str(Path(__file__).parent)))
+    env = Environment(loader=FileSystemLoader(str(SCRIPT_DIR)))
     template = env.get_template(TEMPLATE_FILE)
-    changeset_id = f"20260524-questions-data-{uuid.uuid4().hex[:8]}"
-    xml = template.render(questions=questions, changeset_id=changeset_id)
 
-    OUTPUT_FILE.write_text(xml, encoding="utf-8")
-    print(f"Done! Output written to: {OUTPUT_FILE}")
-    print(f"Next step: add '003_questions_data.xml' to db.changelog-master.xml")
+    if args.with_delete:
+        xml = template.render(questions=questions, changeset_id=LIQUIBASE_CHANGESET_ID, include_delete=True)
+        LIQUIBASE_FILE.write_text(xml, encoding="utf-8")
+        print(f"Done! Liquibase changeset written to: {LIQUIBASE_FILE.resolve()}")
+        print("Next step: commit the images and 005_replace_questions.xml, then merge to main")
+    else:
+        changeset_id = f"20260524-questions-data-{uuid.uuid4().hex[:8]}"
+        xml = template.render(questions=questions, changeset_id=changeset_id, include_delete=False)
+        OUTPUT_FILE.write_text(xml, encoding="utf-8")
+        print(f"Done! Output written to: {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

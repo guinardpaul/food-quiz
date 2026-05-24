@@ -4,6 +4,9 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="{{ changeset_id }}" author="guinardpaul">
+{% if include_delete %}
+        <delete tableName="questions"/>
+{% endif %}
 {% for q in questions %}
         <insert tableName="questions">
             <column name="question_type"       value="{{ q.question_type }}"/>

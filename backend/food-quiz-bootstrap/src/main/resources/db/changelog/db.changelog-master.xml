@@ -5,5 +5,6 @@
     <include file="002_add_visual_question_fields.xml" relativeToChangelogFile="true" />
     <include file="003_questions_data.xml" relativeToChangelogFile="true" />
     <include file="004_remove_quiz_model.xml" relativeToChangelogFile="true" />
+    <include file="005_replace_questions.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
