@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { QuestionDto } from '../../core/models';
 
 @Component({
@@ -13,4 +13,8 @@ export class QuestionCard {
 
   protected imageLoaded = signal(false);
   protected imageError = signal(false);
+
+  protected isRealPhoto = computed(() =>
+    this.question().imageUrl?.includes('/assets/questions/real/') ?? false
+  );
 }
