@@ -194,11 +194,12 @@ def validate_image_portion(
     lower_bound = round(target_g * (1 - VALIDATION_DELTA_PERCENT / 100))
     upper_bound = round(target_g * (1 + VALIDATION_DELTA_PERCENT / 100))
 
-    ext = Path(image_path).suffix.lower()
-    media_type = "image/jpeg" if ext in (".jpg", ".jpeg") else "image/png"
-
     with open(image_path, "rb") as f:
-        image_data = base64.standard_b64encode(f.read()).decode("utf-8")
+        raw_bytes = f.read()
+
+    # Detect actual format from magic bytes — DALL-E returns PNG even when saved as .jpg
+    media_type = "image/png" if raw_bytes[:8] == b"\x89PNG\r\n\x1a\n" else "image/jpeg"
+    image_data = base64.standard_b64encode(raw_bytes).decode("utf-8")
 
     prompt = (
         f"You are a dietitian validating food portion images for a diabetes training app.\n"

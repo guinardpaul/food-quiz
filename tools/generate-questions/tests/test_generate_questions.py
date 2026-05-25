@@ -366,6 +366,39 @@ class TestValidateImagePortion:
         result = validate_image_portion(_FencedClient(), image_path, SIMPLE_FOOD, 180)
         assert result["estimated_weight_g"] == 160
 
+    def test_detects_png_magic_bytes_when_extension_is_jpg(self, tmp_path):
+        # DALL-E saves PNG data in .jpg files; we must sniff the header, not trust the extension
+        png_magic = b"\x89PNG\r\n\x1a\n" + b"\x00" * 100
+        image_path = tmp_path / "plate.jpg"
+        image_path.write_bytes(png_magic)
+
+        captured = {}
+
+        class _CapturingMessages:
+            def create(self, **kwargs):
+                msg_content = kwargs["messages"][0]["content"]
+                captured["media_type"] = msg_content[0]["source"]["media_type"]
+
+                class _Content:
+                    text = json.dumps({
+                        "estimated_weight_g": 180,
+                        "weight_plausible": True,
+                        "visually_clear": True,
+                        "reject_reason": None,
+                        "visual_cues": "ok",
+                    })
+
+                class _Resp:
+                    content = [_Content()]
+
+                return _Resp()
+
+        class _CapturingClient:
+            messages = _CapturingMessages()
+
+        validate_image_portion(_CapturingClient(), image_path, SIMPLE_FOOD, 180)
+        assert captured["media_type"] == "image/png"
+
     def test_complex_food_target_excludes_zero_carb_components(self, tmp_path):
         image_path = tmp_path / "test.jpg"
         image_path.write_bytes(b"fakeimage")
