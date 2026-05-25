@@ -6,5 +6,6 @@
     <include file="003_questions_data.xml" relativeToChangelogFile="true" />
     <include file="004_remove_quiz_model.xml" relativeToChangelogFile="true" />
     <include file="005_replace_questions.xml" relativeToChangelogFile="true" />
+    <include file="006_replace_questions_with_ia_generated_images.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

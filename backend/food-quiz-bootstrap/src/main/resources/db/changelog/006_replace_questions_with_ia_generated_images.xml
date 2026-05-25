@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20260524-questions-data-32ca8061" author="guinardpaul">
-
+        <delete tableName="questions"/>
 
         <insert tableName="questions">
             <column name="question_type"       value="CHOICE"/>
