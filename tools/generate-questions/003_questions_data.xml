@@ -3,15 +3,16 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="20260524-questions-data-14295aed" author="guinardpaul">
+    <changeSet id="20260524-questions-data-32ca8061" author="guinardpaul">
+
 
         <insert tableName="questions">
             <column name="question_type"       value="CHOICE"/>
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Riz blanc cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "30g", "70g", "50g"]'/>
+            <column name="image_url"           value="/assets/questions/riz-blanc-cuit_180g.jpg"/>
+            <column name="proposed_answer"     value='["50g", "30g", "85g", "20g"]'/>
             <column name="correct_answer"      value="50g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -22,8 +23,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pâtes cuites"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["70g", "50g", "30g", "85g"]'/>
+            <column name="image_url"           value="/assets/questions/pates-cuites_200g.jpg"/>
+            <column name="proposed_answer"     value='["70g", "85g", "50g", "30g"]'/>
             <column name="correct_answer"      value="50g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -34,8 +35,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Semoule cuite"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["38g", "65g", "25g", "15g"]'/>
+            <column name="image_url"           value="/assets/questions/semoule-cuite_180g.jpg"/>
+            <column name="proposed_answer"     value='["65g", "38g", "25g", "15g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -46,8 +47,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Quinoa cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["38g", "15g", "25g", "65g"]'/>
+            <column name="image_url"           value="/assets/questions/quinoa-cuit_180g.jpg"/>
+            <column name="proposed_answer"     value='["38g", "65g", "25g", "55g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -58,8 +59,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Boulgour cuit"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["55g", "70g", "41g", "25g"]'/>
+            <column name="image_url"           value="/assets/questions/boulgour-cuit_180g.jpg"/>
+            <column name="proposed_answer"     value='["41g", "70g", "15g", "55g"]'/>
             <column name="correct_answer"      value="41g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -70,8 +71,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pain de mie blanc"/>
             <column name="portion_description" value="Portion standard (~60g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "40g", "30g", "50g"]'/>
+            <column name="image_url"           value="/assets/questions/pain-de-mie-blanc_60g.jpg"/>
+            <column name="proposed_answer"     value='["30g", "40g", "20g", "50g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -82,8 +83,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Baguette"/>
             <column name="portion_description" value="Portion standard (~80g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "65g", "46g", "80g"]'/>
+            <column name="image_url"           value="/assets/questions/baguette_80g.jpg"/>
+            <column name="proposed_answer"     value='["65g", "46g", "15g", "80g"]'/>
             <column name="correct_answer"      value="46g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -94,8 +95,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Brioche"/>
             <column name="portion_description" value="Portion standard (~60g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["45g", "20g", "32g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/brioche_60g.jpg"/>
+            <column name="proposed_answer"     value='["20g", "45g", "32g", "55g"]'/>
             <column name="correct_answer"      value="32g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -106,8 +107,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Croissant"/>
             <column name="portion_description" value="Portion standard (~60g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["45g", "27g", "15g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/croissant_60g.jpg"/>
+            <column name="proposed_answer"     value='["45g", "15g", "10g", "27g"]'/>
             <column name="correct_answer"      value="27g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -118,8 +119,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pain au chocolat"/>
             <column name="portion_description" value="Portion standard (~70g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["50g", "60g", "20g", "34g"]'/>
+            <column name="image_url"           value="/assets/questions/pain-au-chocolat_70g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "34g", "50g", "60g"]'/>
             <column name="correct_answer"      value="34g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -130,8 +131,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Wrap farine de blé"/>
             <column name="portion_description" value="Portion standard (~60g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["31g", "55g", "10g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/wrap-farine-ble_60g.jpg"/>
+            <column name="proposed_answer"     value='["45g", "20g", "31g", "10g"]'/>
             <column name="correct_answer"      value="31g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -142,8 +143,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Lentilles cuites"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "40g", "50g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/lentilles-cuites_180g.jpg"/>
+            <column name="proposed_answer"     value='["50g", "10g", "30g", "40g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -154,8 +155,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pois chiches cuits"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "39g", "25g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/pois-chiches-cuits_180g.jpg"/>
+            <column name="proposed_answer"     value='["25g", "65g", "15g", "39g"]'/>
             <column name="correct_answer"      value="39g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -166,8 +167,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Haricots rouges cuits"/>
             <column name="portion_description" value="Portion standard (~180g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["28g", "40g", "50g", "15g"]'/>
+            <column name="image_url"           value="/assets/questions/haricots-rouges-cuits_180g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "28g", "40g", "50g"]'/>
             <column name="correct_answer"      value="28g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -178,8 +179,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Flocons d'avoine"/>
             <column name="portion_description" value="Portion standard (~50g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["40g", "30g", "10g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/flocons-avoine_50g.jpg"/>
+            <column name="proposed_answer"     value='["20g", "50g", "30g", "40g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -190,8 +191,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Corn flakes"/>
             <column name="portion_description" value="Portion standard (~40g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["34g", "50g", "20g", "60g"]'/>
+            <column name="image_url"           value="/assets/questions/corn-flakes_40g.jpg"/>
+            <column name="proposed_answer"     value='["20g", "60g", "50g", "34g"]'/>
             <column name="correct_answer"      value="34g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -202,8 +203,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Muesli"/>
             <column name="portion_description" value="Portion standard (~50g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["45g", "32g", "20g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/muesli_50g.jpg"/>
+            <column name="proposed_answer"     value='["32g", "55g", "45g", "20g"]'/>
             <column name="correct_answer"      value="32g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -214,8 +215,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pomme de terre cuite"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "33g", "55g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/pomme-de-terre-cuite_200g.jpg"/>
+            <column name="proposed_answer"     value='["45g", "20g", "10g", "33g"]'/>
             <column name="correct_answer"      value="33g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -226,8 +227,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Frites"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "80g", "56g", "95g"]'/>
+            <column name="image_url"           value="/assets/questions/frites_150g.jpg"/>
+            <column name="proposed_answer"     value='["35g", "95g", "20g", "56g"]'/>
             <column name="correct_answer"      value="56g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -238,8 +239,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Patate douce cuite"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "50g", "40g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/patate-douce-cuite_150g.jpg"/>
+            <column name="proposed_answer"     value='["30g", "40g", "10g", "50g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -250,8 +251,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Maïs en grains"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "27g", "45g", "40g"]'/>
+            <column name="image_url"           value="/assets/questions/mais-en-grains_150g.jpg"/>
+            <column name="proposed_answer"     value='["40g", "10g", "45g", "27g"]'/>
             <column name="correct_answer"      value="27g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 7}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -262,8 +263,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Petits pois cuits"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["5g", "10g", "20g", "13g"]'/>
+            <column name="image_url"           value="/assets/questions/petits-pois-cuits_150g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "13g", "20g", "5g"]'/>
             <column name="correct_answer"      value="13g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 3}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -274,8 +275,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Betterave cuite"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "5g", "10g", "13g"]'/>
+            <column name="image_url"           value="/assets/questions/betterave-cuite_150g.jpg"/>
+            <column name="proposed_answer"     value='["5g", "10g", "20g", "13g"]'/>
             <column name="correct_answer"      value="13g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 3}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -286,8 +287,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Carottes cuites"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["5g", "15g", "10g", "30g"]'/>
+            <column name="image_url"           value="/assets/questions/carottes-cuites_150g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "30g", "5g", "15g"]'/>
             <column name="correct_answer"      value="10g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 2}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -298,8 +299,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Banane"/>
             <column name="portion_description" value="Portion standard (~120g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "35g", "25g", "40g"]'/>
+            <column name="image_url"           value="/assets/questions/banane_120g.jpg"/>
+            <column name="proposed_answer"     value='["40g", "35g", "25g", "10g"]'/>
             <column name="correct_answer"      value="25g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -310,8 +311,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Raisin"/>
             <column name="portion_description" value="Portion standard (~100g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["25g", "17g", "5g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/raisin_100g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "5g", "25g", "17g"]'/>
             <column name="correct_answer"      value="17g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -323,7 +324,7 @@
             <column name="food_name"           value="Pomme"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
             <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["18g", "10g", "30g", "25g"]'/>
+            <column name="proposed_answer"     value='["10g", "25g", "18g", "30g"]'/>
             <column name="correct_answer"      value="18g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -334,8 +335,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Orange"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "5g", "10g", "15g"]'/>
+            <column name="image_url"           value="/assets/questions/orange_150g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "20g", "15g", "25g"]'/>
             <column name="correct_answer"      value="15g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -346,8 +347,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Mangue"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["35g", "15g", "30g", "22g"]'/>
+            <column name="image_url"           value="/assets/questions/mangue_150g.jpg"/>
+            <column name="proposed_answer"     value='["15g", "30g", "10g", "22g"]'/>
             <column name="correct_answer"      value="22g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -358,8 +359,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Jus d'orange"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "5g", "35g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/jus-orange_200g.jpg"/>
+            <column name="proposed_answer"     value='["5g", "10g", "30g", "20g"]'/>
             <column name="correct_answer"      value="20g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 5}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -370,8 +371,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Jus de pomme"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "22g", "10g", "30g"]'/>
+            <column name="image_url"           value="/assets/questions/jus-pomme_200g.jpg"/>
+            <column name="proposed_answer"     value='["22g", "15g", "35g", "10g"]'/>
             <column name="correct_answer"      value="22g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -382,8 +383,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Soda cola"/>
             <column name="portion_description" value="Portion standard (~330g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["60g", "50g", "10g", "35g"]'/>
+            <column name="image_url"           value="/assets/questions/soda-cola_330g.jpg"/>
+            <column name="proposed_answer"     value='["60g", "20g", "35g", "10g"]'/>
             <column name="correct_answer"      value="35g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 9}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -394,8 +395,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Lait entier"/>
             <column name="portion_description" value="Portion standard (~250g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["5g", "12g", "15g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/lait-entier_250g.jpg"/>
+            <column name="proposed_answer"     value='["20g", "12g", "15g", "5g"]'/>
             <column name="correct_answer"      value="12g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 3}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -406,8 +407,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Yaourt sucré aux fruits"/>
             <column name="portion_description" value="Portion standard (~125g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["18g", "10g", "25g", "30g"]'/>
+            <column name="image_url"           value="/assets/questions/yaourt-sucre-fruits_125g.jpg"/>
+            <column name="proposed_answer"     value='["25g", "5g", "18g", "10g"]'/>
             <column name="correct_answer"      value="18g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -418,8 +419,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Riz au lait"/>
             <column name="portion_description" value="Portion standard (~150g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "40g", "25g", "15g"]'/>
+            <column name="image_url"           value="/assets/questions/riz-au-lait_150g.jpg"/>
+            <column name="proposed_answer"     value='["15g", "40g", "10g", "25g"]'/>
             <column name="correct_answer"      value="25g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -430,8 +431,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Sorbet citron"/>
             <column name="portion_description" value="Portion standard (~100g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "40g", "30g", "50g"]'/>
+            <column name="image_url"           value="/assets/questions/sorbet-citron_100g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "30g", "20g", "40g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -442,8 +443,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Glace vanille"/>
             <column name="portion_description" value="Portion standard (~100g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["35g", "40g", "24g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/glace-vanille_100g.jpg"/>
+            <column name="proposed_answer"     value='["35g", "40g", "15g", "24g"]'/>
             <column name="correct_answer"      value="24g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -454,8 +455,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Chocolat au lait"/>
             <column name="portion_description" value="Portion standard (~30g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "17g", "10g", "25g"]'/>
+            <column name="image_url"           value="/assets/questions/chocolat-au-lait_30g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "5g", "30g", "17g"]'/>
             <column name="correct_answer"      value="17g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -466,8 +467,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Miel"/>
             <column name="portion_description" value="Portion standard (~20g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["20g", "5g", "16g", "10g"]'/>
+            <column name="image_url"           value="/assets/questions/miel_20g.jpg"/>
+            <column name="proposed_answer"     value='["10g", "16g", "20g", "5g"]'/>
             <column name="correct_answer"      value="16g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 4}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -478,8 +479,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Confiture"/>
             <column name="portion_description" value="Portion standard (~30g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["5g", "19g", "30g", "25g"]'/>
+            <column name="image_url"           value="/assets/questions/confiture_30g.jpg"/>
+            <column name="proposed_answer"     value='["25g", "19g", "30g", "10g"]'/>
             <column name="correct_answer"      value="19g"/>
             <column name="equivalents"         value='{"breadSlices": 1, "sugarCubes": 5}'/>
             <column name="glycemic_impact"     value="LOW"/>
@@ -490,8 +491,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Biscuits secs"/>
             <column name="portion_description" value="Portion standard (~40g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "40g", "30g", "50g"]'/>
+            <column name="image_url"           value="/assets/questions/biscuits-secs_40g.jpg"/>
+            <column name="proposed_answer"     value='["40g", "50g", "10g", "30g"]'/>
             <column name="correct_answer"      value="30g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -502,8 +503,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Galette de riz"/>
             <column name="portion_description" value="Portion standard (~30g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["35g", "24g", "10g", "40g"]'/>
+            <column name="image_url"           value="/assets/questions/galette-de-riz_30g.jpg"/>
+            <column name="proposed_answer"     value='["15g", "24g", "10g", "40g"]'/>
             <column name="correct_answer"      value="24g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -514,8 +515,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Crêpe sucrée"/>
             <column name="portion_description" value="Portion standard (~80g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["35g", "10g", "40g", "24g"]'/>
+            <column name="image_url"           value="/assets/questions/crepe-sucree_80g.jpg"/>
+            <column name="proposed_answer"     value='["24g", "10g", "40g", "15g"]'/>
             <column name="correct_answer"      value="24g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 6}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -526,8 +527,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Gaufre"/>
             <column name="portion_description" value="Portion standard (~80g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["38g", "15g", "55g", "65g"]'/>
+            <column name="image_url"           value="/assets/questions/gaufre_80g.jpg"/>
+            <column name="proposed_answer"     value='["25g", "55g", "65g", "38g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -538,8 +539,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pancakes"/>
             <column name="portion_description" value="Portion standard (~120g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "46g", "15g", "80g"]'/>
+            <column name="image_url"           value="/assets/questions/pancakes_120g.jpg"/>
+            <column name="proposed_answer"     value='["15g", "46g", "80g", "30g"]'/>
             <column name="correct_answer"      value="46g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -550,8 +551,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Tarte aux pommes"/>
             <column name="portion_description" value="Portion standard (~100g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "20g", "35g", "60g"]'/>
+            <column name="image_url"           value="/assets/questions/tarte-aux-pommes_100g.jpg"/>
+            <column name="proposed_answer"     value='["20g", "50g", "10g", "35g"]'/>
             <column name="correct_answer"      value="35g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 9}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -562,8 +563,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Brownie chocolat"/>
             <column name="portion_description" value="Portion standard (~80g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["60g", "42g", "70g", "25g"]'/>
+            <column name="image_url"           value="/assets/questions/brownie-chocolat_80g.jpg"/>
+            <column name="proposed_answer"     value='["42g", "25g", "70g", "15g"]'/>
             <column name="correct_answer"      value="42g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -574,8 +575,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Muffin"/>
             <column name="portion_description" value="Portion standard (~90g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["47g", "30g", "80g", "65g"]'/>
+            <column name="image_url"           value="/assets/questions/muffin_90g.jpg"/>
+            <column name="proposed_answer"     value='["15g", "80g", "47g", "30g"]'/>
             <column name="correct_answer"      value="47g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 12}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -586,8 +587,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Cake nature"/>
             <column name="portion_description" value="Portion standard (~80g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["42g", "15g", "60g", "25g"]'/>
+            <column name="image_url"           value="/assets/questions/cake-nature_80g.jpg"/>
+            <column name="proposed_answer"     value='["25g", "60g", "70g", "42g"]'/>
             <column name="correct_answer"      value="42g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -598,8 +599,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pizza margherita"/>
             <column name="portion_description" value="Portion standard (~200g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["60g", "35g", "85g", "100g"]'/>
+            <column name="image_url"           value="/assets/questions/pizza-margherita_200g.jpg"/>
+            <column name="proposed_answer"     value='["100g", "60g", "35g", "20g"]'/>
             <column name="correct_answer"      value="60g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 15}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -610,8 +611,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Couscous poulet légumes"/>
             <column name="portion_description" value="Assiette complète (~330g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["50g", "60g", "35g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/couscous-poulet-legumes.jpg"/>
+            <column name="proposed_answer"     value='["20g", "10g", "35g", "60g"]'/>
             <column name="correct_answer"      value="35g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 9}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -622,8 +623,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Steak frites haricots verts"/>
             <column name="portion_description" value="Assiette complète (~350g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["35g", "100g", "20g", "58g"]'/>
+            <column name="image_url"           value="/assets/questions/steak-frites-haricots-verts.jpg"/>
+            <column name="proposed_answer"     value='["100g", "20g", "80g", "58g"]'/>
             <column name="correct_answer"      value="58g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -634,8 +635,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Soupe lentilles et pain"/>
             <column name="portion_description" value="Assiette complète (~340g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["90g", "75g", "53g", "30g"]'/>
+            <column name="image_url"           value="/assets/questions/soupe-lentilles-pain.jpg"/>
+            <column name="proposed_answer"     value='["75g", "30g", "20g", "53g"]'/>
             <column name="correct_answer"      value="53g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 13}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -646,8 +647,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Wrap poulet crudités"/>
             <column name="portion_description" value="Assiette complète (~190g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["33g", "10g", "20g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/wrap-poulet-crudites.jpg"/>
+            <column name="proposed_answer"     value='["55g", "33g", "20g", "10g"]'/>
             <column name="correct_answer"      value="33g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -658,8 +659,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Pâtes au pesto"/>
             <column name="portion_description" value="Assiette complète (~250g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["56g", "95g", "20g", "80g"]'/>
+            <column name="image_url"           value="/assets/questions/pates-au-pesto.jpg"/>
+            <column name="proposed_answer"     value='["80g", "95g", "56g", "35g"]'/>
             <column name="correct_answer"      value="56g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -670,8 +671,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Riz haricots rouges"/>
             <column name="portion_description" value="Assiette complète (~270g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["61g", "35g", "105g", "20g"]'/>
+            <column name="image_url"           value="/assets/questions/riz-haricots-rouges.jpg"/>
+            <column name="proposed_answer"     value='["85g", "61g", "35g", "105g"]'/>
             <column name="correct_answer"      value="61g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 15}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -682,8 +683,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Buddha bowl quinoa légumes rôtis"/>
             <column name="portion_description" value="Assiette complète (~310g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["30g", "20g", "54g", "90g"]'/>
+            <column name="image_url"           value="/assets/questions/buddha-bowl-quinoa.jpg"/>
+            <column name="proposed_answer"     value='["30g", "54g", "90g", "75g"]'/>
             <column name="correct_answer"      value="54g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -694,8 +695,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Curry de pois chiches et riz"/>
             <column name="portion_description" value="Assiette complète (~300g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["63g", "90g", "105g", "40g"]'/>
+            <column name="image_url"           value="/assets/questions/curry-pois-chiches-riz.jpg"/>
+            <column name="proposed_answer"     value='["40g", "63g", "105g", "20g"]'/>
             <column name="correct_answer"      value="63g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 16}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -706,8 +707,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Saumon pommes de terre"/>
             <column name="portion_description" value="Assiette complète (~320g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["10g", "55g", "20g", "33g"]'/>
+            <column name="image_url"           value="/assets/questions/saumon-pommes-de-terre.jpg"/>
+            <column name="proposed_answer"     value='["33g", "55g", "45g", "20g"]'/>
             <column name="correct_answer"      value="33g"/>
             <column name="equivalents"         value='{"breadSlices": 2, "sugarCubes": 8}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -718,8 +719,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Tartines avocat œufs"/>
             <column name="portion_description" value="Assiette complète (~240g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "25g", "55g", "41g"]'/>
+            <column name="image_url"           value="/assets/questions/tartines-avocat-oeufs.jpg"/>
+            <column name="proposed_answer"     value='["55g", "15g", "25g", "41g"]'/>
             <column name="correct_answer"      value="41g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -730,8 +731,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Galette sarrasin jambon fromage"/>
             <column name="portion_description" value="Assiette complète (~170g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["38g", "25g", "65g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/galette-sarrasin-jambon.jpg"/>
+            <column name="proposed_answer"     value='["65g", "55g", "15g", "38g"]'/>
             <column name="correct_answer"      value="38g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -742,8 +743,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Riz sauté aux légumes"/>
             <column name="portion_description" value="Assiette complète (~300g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["105g", "35g", "85g", "61g"]'/>
+            <column name="image_url"           value="/assets/questions/riz-saute-legumes.jpg"/>
+            <column name="proposed_answer"     value='["35g", "61g", "85g", "20g"]'/>
             <column name="correct_answer"      value="61g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 15}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -754,8 +755,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Assiette riz et poulet grillé"/>
             <column name="portion_description" value="Assiette complète (~270g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["15g", "60g", "25g", "42g"]'/>
+            <column name="image_url"           value="/assets/questions/assiette-riz-poulet-grille.jpg"/>
+            <column name="proposed_answer"     value='["15g", "25g", "60g", "42g"]'/>
             <column name="correct_answer"      value="42g"/>
             <column name="equivalents"         value='{"breadSlices": 3, "sugarCubes": 10}'/>
             <column name="glycemic_impact"     value="MEDIUM"/>
@@ -766,8 +767,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Assiette pâtes bolognaise"/>
             <column name="portion_description" value="Assiette complète (~300g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["75g", "35g", "95g", "55g"]'/>
+            <column name="image_url"           value="/assets/questions/assiette-pates-bolognaise.jpg"/>
+            <column name="proposed_answer"     value='["75g", "55g", "20g", "35g"]'/>
             <column name="correct_answer"      value="55g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>
@@ -778,8 +779,8 @@
             <column name="label"               value="Combien de glucides environ ?"/>
             <column name="food_name"           value="Assiette riz lentilles carottes"/>
             <column name="portion_description" value="Assiette complète (~300g)"/>
-            <column name="image_url"           value=""/>
-            <column name="proposed_answer"     value='["95g", "55g", "20g", "75g"]'/>
+            <column name="image_url"           value="/assets/questions/assiette-riz-lentilles-carottes.jpg"/>
+            <column name="proposed_answer"     value='["20g", "75g", "55g", "35g"]'/>
             <column name="correct_answer"      value="55g"/>
             <column name="equivalents"         value='{"breadSlices": 4, "sugarCubes": 14}'/>
             <column name="glycemic_impact"     value="HIGH"/>

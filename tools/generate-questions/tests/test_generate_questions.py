@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -8,10 +9,14 @@ from generate_questions import (
     compute_carbs_grams,
     compute_equivalents,
     compute_total_carbs,
+    copy_real_photo,
     determine_glycemic_impact,
     generate_distractors,
     generate_plate_image,
     is_simple,
+    load_real_photos_manifest,
+    validate_image_portion,
+    weight_to_visual_descriptor,
 )
 
 SIMPLE_FOOD = {
@@ -82,23 +87,58 @@ class TestIsSimple:
         assert is_simple(COMPLEX_FOOD) is False
 
 
+class TestWeightToVisualDescriptor:
+    def test_rice_small(self):
+        result = weight_to_visual_descriptor(80, "cooked white rice")
+        assert "one-quarter" in result
+
+    def test_rice_medium(self):
+        result = weight_to_visual_descriptor(150, "cooked white rice")
+        assert "one-third" in result
+
+    def test_rice_generous(self):
+        result = weight_to_visual_descriptor(200, "cooked white rice")
+        assert "half" in result
+
+    def test_bread_returns_slice_count(self):
+        result = weight_to_visual_descriptor(40, "French baguette bread")
+        assert "slice" in result
+
+    def test_pasta_medium(self):
+        result = weight_to_visual_descriptor(200, "cooked pasta")
+        assert "one-third" in result
+
+    def test_generic_fallback_small(self):
+        result = weight_to_visual_descriptor(50, "unknown food item")
+        assert "small" in result
+
+    def test_generic_fallback_generous(self):
+        result = weight_to_visual_descriptor(200, "unknown food item")
+        assert "half" in result
+
+
 class TestBuildPrompt:
     def test_simple_food_includes_ingredient(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
         assert "cooked white rice" in prompt
 
-    def test_simple_food_includes_generous_serving(self):
+    def test_simple_food_uses_45_degree_angle(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
-        assert "generous serving" in prompt
+        assert "45 degrees" in prompt
 
     def test_simple_food_includes_photography_keywords(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
-        assert "overhead food photography" in prompt.lower()
+        assert "food photography" in prompt.lower()
         assert "no text" in prompt.lower()
 
     def test_simple_food_does_not_include_grams_in_prompt(self):
         prompt = build_prompt(SIMPLE_FOOD, 180)
         assert "180g" not in prompt
+
+    def test_simple_food_different_portions_produce_different_prompts(self):
+        prompt_100 = build_prompt(SIMPLE_FOOD, 100)
+        prompt_200 = build_prompt(SIMPLE_FOOD, 200)
+        assert prompt_100 != prompt_200
 
     def test_complex_dish_includes_all_components(self):
         prompt = build_prompt(COMPLEX_FOOD)
@@ -108,6 +148,10 @@ class TestBuildPrompt:
     def test_complex_dish_includes_complete_meal_plate(self):
         prompt = build_prompt(COMPLEX_FOOD)
         assert "complete meal plate" in prompt
+
+    def test_complex_dish_uses_45_degree_angle(self):
+        prompt = build_prompt(COMPLEX_FOOD)
+        assert "45 degrees" in prompt
 
     def test_three_component_dish_uses_and_separator(self):
         prompt = build_prompt(THREE_COMPONENT_FOOD)
@@ -121,11 +165,6 @@ class TestBuildPrompt:
         prompt = build_prompt(COMPLEX_FOOD)
         assert "150g" not in prompt
         assert "120g" not in prompt
-
-    def test_simple_food_same_prompt_for_different_portions_of_same_ingredient(self):
-        prompt_100 = build_prompt(SIMPLE_FOOD, 100)
-        prompt_200 = build_prompt(SIMPLE_FOOD, 200)
-        assert prompt_100 == prompt_200
 
 
 class TestDetermineGlycemicImpact:
@@ -183,28 +222,53 @@ import base64 as _base64
 _FAKE_B64 = _base64.b64encode(b"fakeimage").decode()
 
 
-def _make_mock_client(api_called: list | None = None):
+def _make_mock_openai_client(api_called: list | None = None):
     class _MockImages:
         def generate(self, **kwargs):
             if api_called is not None:
                 api_called.append(True)
+
             class _Item:
                 b64_json = _FAKE_B64
+
             class _Resp:
                 data = [_Item()]
+
             return _Resp()
+
     class _MockClient:
         images = _MockImages()
+
+    return _MockClient()
+
+
+def _make_mock_anthropic_client(response_payload: dict):
+    raw = json.dumps(response_payload)
+
+    class _MockContent:
+        text = raw
+
+    class _MockResponse:
+        content = [_MockContent()]
+
+    class _MockMessages:
+        def create(self, **kwargs):
+            return _MockResponse()
+
+    class _MockClient:
+        messages = _MockMessages()
+
     return _MockClient()
 
 
 class TestGeneratePlateImage:
     def test_simple_image_path_includes_portion(self, tmp_path, monkeypatch):
         import generate_questions
+
         monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
         monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
 
-        result = generate_plate_image(_make_mock_client(), "test prompt", "riz-blanc-cuit", 180)
+        result = generate_plate_image(_make_mock_openai_client(), "test prompt", "riz-blanc-cuit", 180)
 
         assert result == "/assets/questions/riz-blanc-cuit_180g.jpg"
         assert (tmp_path / "output" / "riz-blanc-cuit_180g.jpg").exists()
@@ -212,15 +276,17 @@ class TestGeneratePlateImage:
 
     def test_complex_image_path_has_no_portion_suffix(self, tmp_path, monkeypatch):
         import generate_questions
+
         monkeypatch.setattr(generate_questions, "OUTPUT_IMAGES_DIR", tmp_path / "output")
         monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_DIR", tmp_path / "frontend")
 
-        result = generate_plate_image(_make_mock_client(), "test prompt", "assiette-riz-poulet")
+        result = generate_plate_image(_make_mock_openai_client(), "test prompt", "assiette-riz-poulet")
 
         assert result == "/assets/questions/assiette-riz-poulet.jpg"
 
     def test_cached_image_is_not_regenerated(self, tmp_path, monkeypatch):
         import generate_questions
+
         output_dir = tmp_path / "output"
         output_dir.mkdir()
         frontend_dir = tmp_path / "frontend"
@@ -231,6 +297,193 @@ class TestGeneratePlateImage:
         (output_dir / "riz-blanc-cuit_180g.jpg").write_bytes(b"cached")
 
         api_called = []
-        generate_plate_image(_make_mock_client(api_called), "test prompt", "riz-blanc-cuit", 180)
+        generate_plate_image(_make_mock_openai_client(api_called), "test prompt", "riz-blanc-cuit", 180)
 
         assert not api_called, "API should not be called when image is already cached"
+
+
+class TestValidateImagePortion:
+    def test_returns_plausible_result(self, tmp_path):
+        image_path = tmp_path / "test.jpg"
+        image_path.write_bytes(b"fakeimage")
+
+        payload = {
+            "estimated_weight_g": 175,
+            "weight_plausible": True,
+            "visually_clear": True,
+            "reject_reason": None,
+            "visual_cues": "The rice mound covers about one-third of the plate",
+        }
+        client = _make_mock_anthropic_client(payload)
+        result = validate_image_portion(client, image_path, SIMPLE_FOOD, 180)
+
+        assert result["weight_plausible"] is True
+        assert result["visually_clear"] is True
+        assert result["estimated_weight_g"] == 175
+
+    def test_returns_rejected_result(self, tmp_path):
+        image_path = tmp_path / "test.jpg"
+        image_path.write_bytes(b"fakeimage")
+
+        payload = {
+            "estimated_weight_g": 350,
+            "weight_plausible": False,
+            "visually_clear": True,
+            "reject_reason": "Portion appears much larger than target",
+            "visual_cues": "The rice covers most of the plate",
+        }
+        client = _make_mock_anthropic_client(payload)
+        result = validate_image_portion(client, image_path, SIMPLE_FOOD, 180)
+
+        assert result["weight_plausible"] is False
+        assert result["reject_reason"] == "Portion appears much larger than target"
+
+    def test_strips_markdown_code_fences(self, tmp_path):
+        image_path = tmp_path / "test.jpg"
+        image_path.write_bytes(b"fakeimage")
+
+        payload = {
+            "estimated_weight_g": 160,
+            "weight_plausible": True,
+            "visually_clear": True,
+            "reject_reason": None,
+            "visual_cues": "Looks good",
+        }
+
+        class _FencedContent:
+            text = "```json\n" + json.dumps(payload) + "\n```"
+
+        class _FencedResponse:
+            content = [_FencedContent()]
+
+        class _FencedMessages:
+            def create(self, **kwargs):
+                return _FencedResponse()
+
+        class _FencedClient:
+            messages = _FencedMessages()
+
+        result = validate_image_portion(_FencedClient(), image_path, SIMPLE_FOOD, 180)
+        assert result["estimated_weight_g"] == 160
+
+    def test_detects_png_magic_bytes_when_extension_is_jpg(self, tmp_path):
+        # DALL-E saves PNG data in .jpg files; we must sniff the header, not trust the extension
+        png_magic = b"\x89PNG\r\n\x1a\n" + b"\x00" * 100
+        image_path = tmp_path / "plate.jpg"
+        image_path.write_bytes(png_magic)
+
+        captured = {}
+
+        class _CapturingMessages:
+            def create(self, **kwargs):
+                msg_content = kwargs["messages"][0]["content"]
+                captured["media_type"] = msg_content[0]["source"]["media_type"]
+
+                class _Content:
+                    text = json.dumps({
+                        "estimated_weight_g": 180,
+                        "weight_plausible": True,
+                        "visually_clear": True,
+                        "reject_reason": None,
+                        "visual_cues": "ok",
+                    })
+
+                class _Resp:
+                    content = [_Content()]
+
+                return _Resp()
+
+        class _CapturingClient:
+            messages = _CapturingMessages()
+
+        validate_image_portion(_CapturingClient(), image_path, SIMPLE_FOOD, 180)
+        assert captured["media_type"] == "image/png"
+
+    def test_complex_food_target_excludes_zero_carb_components(self, tmp_path):
+        image_path = tmp_path / "test.jpg"
+        image_path.write_bytes(b"fakeimage")
+
+        api_args = {}
+
+        class _CapturingMessages:
+            def create(self, **kwargs):
+                api_args.update(kwargs)
+
+                class _Content:
+                    text = json.dumps({
+                        "estimated_weight_g": 150,
+                        "weight_plausible": True,
+                        "visually_clear": True,
+                        "reject_reason": None,
+                        "visual_cues": "ok",
+                    })
+
+                class _Resp:
+                    content = [_Content()]
+
+                return _Resp()
+
+        class _CapturingClient:
+            messages = _CapturingMessages()
+
+        validate_image_portion(_CapturingClient(), image_path, COMPLEX_FOOD, None)
+        prompt_text = api_args["messages"][0]["content"][1]["text"]
+        # target_g for COMPLEX_FOOD = only rice (carbs > 3): 150g; chicken excluded
+        assert "150g" in prompt_text
+
+
+class TestLoadRealPhotosManifest:
+    def test_missing_file_returns_empty_set(self, tmp_path, monkeypatch):
+        import generate_questions
+
+        monkeypatch.setattr(generate_questions, "REAL_PHOTOS_MANIFEST", tmp_path / "nonexistent.json")
+        result = load_real_photos_manifest()
+        assert result == set()
+
+    def test_valid_manifest_returns_slugs(self, tmp_path, monkeypatch):
+        import generate_questions
+
+        manifest = tmp_path / "real_photos.json"
+        manifest.write_text(json.dumps({"slugs": ["riz-blanc-cuit", "pates-cuites"]}))
+        monkeypatch.setattr(generate_questions, "REAL_PHOTOS_MANIFEST", manifest)
+        result = load_real_photos_manifest()
+        assert result == {"riz-blanc-cuit", "pates-cuites"}
+
+    def test_empty_slugs_list(self, tmp_path, monkeypatch):
+        import generate_questions
+
+        manifest = tmp_path / "real_photos.json"
+        manifest.write_text(json.dumps({"slugs": []}))
+        monkeypatch.setattr(generate_questions, "REAL_PHOTOS_MANIFEST", manifest)
+        result = load_real_photos_manifest()
+        assert result == set()
+
+
+class TestCopyRealPhoto:
+    def test_copies_photo_and_returns_url(self, tmp_path, monkeypatch):
+        import generate_questions
+
+        input_dir = tmp_path / "real_photos"
+        input_dir.mkdir()
+        (input_dir / "riz-blanc-cuit.jpg").write_bytes(b"realphoto")
+        frontend_real_dir = tmp_path / "frontend" / "real"
+
+        monkeypatch.setattr(generate_questions, "REAL_PHOTOS_INPUT_DIR", input_dir)
+        monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_REAL_DIR", frontend_real_dir)
+
+        result = copy_real_photo("riz-blanc-cuit")
+
+        assert result == "/assets/questions/real/riz-blanc-cuit.jpg"
+        assert (frontend_real_dir / "riz-blanc-cuit.jpg").read_bytes() == b"realphoto"
+
+    def test_raises_when_source_missing(self, tmp_path, monkeypatch):
+        import generate_questions
+        import pytest
+
+        input_dir = tmp_path / "real_photos"
+        input_dir.mkdir()
+        monkeypatch.setattr(generate_questions, "REAL_PHOTOS_INPUT_DIR", input_dir)
+        monkeypatch.setattr(generate_questions, "FRONTEND_ASSETS_REAL_DIR", tmp_path / "frontend" / "real")
+
+        with pytest.raises(FileNotFoundError):
+            copy_real_photo("nonexistent-slug")
